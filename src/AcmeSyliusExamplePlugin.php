@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace BitBag\MultiVendorMarketplace;
+namespace Acme\SyliusExamplePlugin;
 
 use Sylius\Bundle\CoreBundle\Application\SyliusPluginTrait;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
-final class MultiVendorMarketplacePlugin extends Bundle
+final class AcmeSyliusExamplePlugin extends Bundle
 {
     use SyliusPluginTrait;
 }

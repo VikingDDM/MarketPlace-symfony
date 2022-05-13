@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace BitBag\MultiVendorMarketplace\DependencyInjection;
+namespace Acme\SyliusExamplePlugin\DependencyInjection;
 
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\Extension;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 
-final class MultiVendorMarketplaceExtension extends Extension
+final class AcmeSyliusExampleExtension extends Extension
 {
     /**
      * @psalm-suppress UnusedVariable
