@@ -1,0 +1,2 @@
+imports:
+  - { 'admin/product_listing.yml' }
