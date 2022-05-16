@@ -1,4 +1,5 @@
-bitbag_sylius_mvm_plugin:
-    ui:
-        marketplace: Marketplace
-        vendors: Vendors
+bitbag_sylius_multi_vendor_marketplace_plugin:
+  ui:
+    product_listings: 'Product listings'
+    new_product_listing: 'New product listing'
+    edit_product_listing: 'Edit product listing'
