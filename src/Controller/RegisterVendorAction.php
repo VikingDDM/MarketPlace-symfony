@@ -11,15 +11,16 @@ declare(strict_types=1);
 
 namespace BitBag\SyliusMultiVendorMarketplacePlugin\Controller;
 
+use BitBag\SyliusMultiVendorMarketplacePlugin\Entity\Vendor;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 
-final class VendorRegisterAction extends AbstractController
+class RegisterVendorAction extends AbstractController
 {
     public function __invoke(): Response
     {
-        return new JsonResponse('ss');
+        return new JsonResponse("ss");
         // TODO: Implement __invoke() method.
     }
 }
