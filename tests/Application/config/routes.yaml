@@ -1,2 +1,0 @@
-bitbag_sylius_mvm:
-  resource: "@BitBagSyliusMultiVendorMarketplacePlugin/Resources/config/routing.yml"
