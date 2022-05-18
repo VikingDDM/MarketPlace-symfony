@@ -9,10 +9,11 @@
 
 declare(strict_types=1);
 
-namespace BitBag\SyliusMultiVendorMarketplacePlugin\Repository;
+namespace BitBag\SyliusMultiVendorMarketplacePlugin\Entity;
 
-use Sylius\Bundle\ResourceBundle\Doctrine\ORM\EntityRepository;
-
-class ProductListingRepository extends EntityRepository implements ProductListingRepositoryInterface
+interface CustomerInterface
 {
+    public function setVendor(Vendor $vendor): void;
+
+    public function getVendor(): ?Vendor;
 }
