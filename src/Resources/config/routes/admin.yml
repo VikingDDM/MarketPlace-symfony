@@ -1,4 +1,0 @@
-bitbag_sylius_mvm_plugin_admin_vendor:
-    resource: "admin/vendor.yml"
-bitbag_sylius_mvm_plugin_admin_vendor_verify:
-    resource: "admin/vendor_verify.yaml"

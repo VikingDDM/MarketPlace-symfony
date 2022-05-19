@@ -11,16 +11,16 @@ declare(strict_types=1);
 
 namespace BitBag\SyliusMultiVendorMarketplacePlugin\Entity;
 
+use Symfony\Component\Validator\Constraints as Assert;
+
 class Vendor implements VendorInterface
 {
-    public const STATE_UNVERIFIED = 'unverified';
-
-    public const STATE_VERIFIED = 'verified';
-
+    public const ROLE_VENDOR = 'ROLE_VENDOR';
+    
     private int $id;
-
+    
     private Customer $customer;
-
+   
     private ?string $companyName;
 
     private ?string $taxIdentifier;
@@ -28,8 +28,6 @@ class Vendor implements VendorInterface
     private ?string $phoneNumber;
 
     private ?VendorAddress $vendorAddress;
-
-    private string $state = self::STATE_UNVERIFIED;
 
     public function getId(): int
     {
@@ -89,15 +87,5 @@ class Vendor implements VendorInterface
     public function setCustomer(Customer $customer): void
     {
         $this->customer = $customer;
-    }
-
-    public function getState(): string
-    {
-        return $this->state;
-    }
-
-    public function setState(string $state): void
-    {
-        $this->state = $state;
     }
 }
