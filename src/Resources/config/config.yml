@@ -1,0 +1,4 @@
+imports:
+    - { resource: "resources.yml" }
+    - { resource: "grids.yml" }
+    - { resource: "state_machine/state_machine.yml" }
