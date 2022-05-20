@@ -13,8 +13,6 @@ namespace BitBag\SyliusMultiVendorMarketplacePlugin\Entity;
 
 class Vendor implements VendorInterface
 {
-    public const ROLE_VENDOR = 'ROLE_VENDOR';
-
     private int $id;
 
     private Customer $customer;

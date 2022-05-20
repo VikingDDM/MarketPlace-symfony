@@ -1,3 +1,2 @@
 imports:
-    - suites/customer_dashboard.yml
-    - suites/vendor_register.yml
+    - suites/ui/managing_vendors.yml
