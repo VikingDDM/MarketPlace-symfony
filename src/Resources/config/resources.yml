@@ -1,7 +1,2 @@
 imports:
-    - { resource: "resources/conversation.yml" }
-    - { resource: "resources/conversation_category.yml" }
-    - { resource: "resources/vendor.yml" }
-    - { resource: "resources/conversation_message.yml" }
-    - { resource: "resources/vendor_user.yml" }
-    - { resource: "resources/customer.yml"}
+  - { resource: '@BitBagSyliusMultiVendorMarketplacePlugin/Resources/config/resources/multi_vendor_market_place_product_listing.yml' }
