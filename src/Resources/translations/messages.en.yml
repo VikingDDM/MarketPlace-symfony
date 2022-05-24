@@ -1,11 +1,12 @@
-bitbag_sylius_multi_vendor_marketplace_plugin:
+bitbag_mvm:
   ui:
-    product_listings: 'Product listings'
-    marketplace: 'Marketplace'
-    published_at: 'Published at'
-    status: 'Status'
-    details: 'Details'
-    name: 'Name'
-    accept: 'Accept'
-    reject: 'Reject'
-    confirm: 'Are you sure?'
+    vendor_dashboard: "Vendor dashboard"    
+    tax_identifier: "Tax Identifier"
+    not_blank: "This field cannnot be empty"
+    company_name: "Company name"
+    country: "Country"
+    city: "City"
+    street: "Street"
+    phone_number: "Phone number"
+    company_address: "Company Address"
+    postal_code: "Postal code"
