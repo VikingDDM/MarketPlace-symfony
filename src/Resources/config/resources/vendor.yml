@@ -1,8 +1,6 @@
 sylius_resource:
-    resources:
-        mvm.vendor:
-            driver: doctrine/orm
-            classes:
-                model: BitBag\SyliusMultiVendorMarketplacePlugin\Entity\Vendor
-                interface: BitBag\SyliusMultiVendorMarketplacePlugin\Entity\VendorInterface
-                repository: BitBag\SyliusMultiVendorMarketplacePlugin\Repository\VendorRepository
+  resources:
+    bitbag_multi_vendor_marketplace.vendor:
+      classes:
+        model: BitBag\SyliusMultiVendorMarketplacePlugin\Entity\Vendor
+        controller: BitBag\SyliusMultiVendorMarketplacePlugin\Controller\VendorController
