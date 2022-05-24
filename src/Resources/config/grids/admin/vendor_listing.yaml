@@ -1,0 +1,52 @@
+sylius_grid:
+    grids:
+        bitbag_sylius_mvm_plugin_vendor:
+            driver:
+                name: doctrine/orm
+                options:
+                    class: "%bitbag_sylius_mvm_plugin.model.vendor.class%"
+                    repository:
+                        method: createListQueryBuilder
+            sorting:
+                id: asc
+            fields:
+                id:
+                    type: string
+                    label: bitbag_sylius_mvm_plugin.ui.id
+                    sortable: ~
+                companyName:
+                    type: string
+                    label: bitbag_sylius_mvm_plugin.ui.company_name
+                    sortable: ~
+                taxIdentifier:
+                    type: string
+                    label: bitbag_sylius_mvm_plugin.ui.tax_id
+                    sortable: ~
+                status:
+                    type: string
+                    label: bitbag_sylius_mvm_plugin.ui.status
+                    sortable: ~
+            actions:
+                main:
+                    create:
+                        type: create
+                item:
+                    details:
+                        label: bitbag_sylius_mvm_plugin.ui.details
+                        type: show
+                    update:
+                        type: update
+                    delete:
+                        type: delete
+
+#                    verify:
+#                        type: apply_transition
+#                        label: bitbag_sylius_mvm_plugin.ui.verify
+#                        icon: thumbs up
+#                        options:
+#                            link:
+#                                route: bitbag_sylius_mvm_plugin_admin_vendor_verify
+#                                parameters:
+#                                    id: resource.id
+#                            transition: verify
+#                            graph: bitbag_sylius_mvm_plugin_vendor
