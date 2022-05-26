@@ -1,16 +1,17 @@
-bitbag_sylius_multi_vendor_marketplace_plugin:
-  ui:
-    product_listings: 'Product listings'
-    marketplace: 'Marketplace'
-    published_at: 'Published at'
-    verified_at: 'Verified at'
-    status: 'Status'
-    details: 'Details'
-    name: 'Name'
-    accept: 'Accept'
-    reject: 'Reject'
-    confirm: 'Are you sure?'
-    code: 'Code'
-    verified: 'Verified'
-    rejected: 'Rejected'
-    under_verification: 'Under verification'
+bitbag_sylius_mvm_plugin:
+    ui:
+        block: Block
+        company_name: Company name
+        customer: Customer
+        details: Details
+        id: ID
+        marketplace: Marketplace
+        phone_number: Phone number
+        status: Status
+        tax_id: Tax ID
+        unblock: Unblock
+        unverified: Unverified
+        vendor_address: Vendor address
+        vendors: Vendors
+        verified: Verified
+        verify: Verify
