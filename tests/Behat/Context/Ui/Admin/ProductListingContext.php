@@ -70,27 +70,41 @@ final class ProductListingContext extends RawMinkContext implements Context
     }
 
     /**
-     * @Given there are :count product listings
+     * @Given there is/are :count product listing(s)
      */
     public function thereAreProductListings($count)
     {
         for ($i = 0; $i < $count; ++$i) {
             $productListing = new ProductListing();
             $productListing->setName('product listing ' . $i);
-            $productListing->setStatus(ProductListingInterface::STATUS_CREATED);
+            $productListing->setStatus(ProductListingInterface::STATUS_UNDER_VERIFICATION);
+            $productListing->setCode('code' . $i);
+            $productListing->setVersionNumber(0);
+            $productListing->setLocale('en_US');
+            $productListing->setSlug('product-listing-' . $i);
             $this->entityManager->persist($productListing);
         }
         $this->entityManager->flush();
     }
 
     /**
-     * @Then I should see :count product listings
+     * @Then I should see :count product listing(s)
      */
     public function iShouldSeeProductListings($count)
     {
         $rows = $this->getPage()->findAll('css', 'table > tbody > tr');
         assertNotEmpty($rows, 'Could not find any rows');
         assertEquals($count, count($rows), 'Rows numbers are not equal');
+    }
+
+    /**
+     * @Then I should see url :url
+     */
+    public function iShouldSeeUrl($url)
+    {
+        $currentUrl = $this->getSession()->getCurrentUrl();
+        $matches = preg_match($url, $currentUrl);
+        assertEquals(1, $matches);
     }
 
     /**
