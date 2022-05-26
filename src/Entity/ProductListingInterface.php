@@ -11,7 +11,6 @@ declare(strict_types=1);
 
 namespace BitBag\SyliusMultiVendorMarketplacePlugin\Entity;
 
-use Sylius\Component\Product\Model\ProductInterface;
 use Sylius\Component\Resource\Model\ResourceInterface;
 
 interface ProductListingInterface extends ResourceInterface
@@ -35,28 +34,4 @@ interface ProductListingInterface extends ResourceInterface
     public function getStatus(): ?string;
 
     public function setStatus(string $status): void;
-
-    public function getVerifiedAt(): ?\DateTimeInterface;
-
-    public function setVerifiedAt(?\DateTimeInterface $verifiedAt): void;
-
-    public function getVersionNumber(): ?int;
-
-    public function setVersionNumber(?int $versionNumber): void;
-
-    public function getProduct(): ?ProductInterface;
-
-    public function setProduct(?ProductInterface $product): void;
-
-    public function getCode(): ?string;
-
-    public function setCode(?string $code): void;
-
-    public function getLocale(): ?string;
-
-    public function setLocale(?string $locale): void;
-
-    public function getSlug(): ?string;
-
-    public function setSlug(?string $slug): void;
 }
