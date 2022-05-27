@@ -18,6 +18,7 @@ use BitBag\SyliusMultiVendorMarketplacePlugin\Exception\UserNotFoundException;
 use Sylius\Bundle\ResourceBundle\Form\Type\AbstractResourceType;
 use Sylius\Component\Core\Model\ShopUserInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\Extension\Core\Type\TelType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
@@ -27,7 +28,7 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 use Symfony\Component\Security\Core\Exception\TokenNotFoundException;
 use Symfony\Component\Validator\Constraints\Valid;
 
-class VendorType extends AbstractResourceType
+final class VendorType extends AbstractResourceType
 {
     private TokenStorageInterface $tokenStorage;
 
@@ -47,16 +48,16 @@ class VendorType extends AbstractResourceType
                 'class' => Customer::class,
             ])
             ->add('companyName', TextType::class, [
-                'label' => 'bitbag_sylius_multi_vendor_marketplace_plugin.ui.company_name',
+                'label' => 'bitbag_mvm.ui.company_name',
             ])
             ->add('taxIdentifier', TextType::class, [
-                'label' => 'bitbag_sylius_multi_vendor_marketplace_plugin.ui.tax_identifier',
+                'label' => 'bitbag_mvm.ui.tax_identifier',
             ])
-            ->add('phoneNumber', TextType::class, [
-                'label' => 'bitbag_sylius_multi_vendor_marketplace_plugin.ui.phone_number',
+            ->add('phoneNumber', TelType::class, [
+                'label' => 'bitbag_mvm.ui.phone_number',
             ])
             ->add('vendorAddress', VendorAddressType::class, [
-                'label' => 'bitbag_sylius_multi_vendor_marketplace_plugin.ui.company_address',
+                'label' => 'bitbag_mvm.ui.company_address',
                 'constraints' => [new Valid()],
             ])
             ->addEventListener(FormEvents::POST_SET_DATA, function (FormEvent $event): void {

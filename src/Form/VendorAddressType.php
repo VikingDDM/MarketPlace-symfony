@@ -19,23 +19,23 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class VendorAddressType extends AbstractType
+final class VendorAddressType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('country', EntityType::class, [
                 'class' => Country::class,
-                'label' => 'bitbag_sylius_multi_vendor_marketplace_plugin.ui.country',
+                'label' => 'bitbag_mvm.ui.country',
             ])
             ->add('city', TextType::class, [
-                'label' => 'bitbag_sylius_multi_vendor_marketplace_plugin.ui.city',
+                'label' => 'bitbag_mvm.ui.city',
             ])
             ->add('street', TextType::class, [
-                'label' => 'bitbag_sylius_multi_vendor_marketplace_plugin.ui.street',
+                'label' => 'bitbag_mvm.ui.street',
             ])
             ->add('postalCode', TextType::class, [
-                'label' => 'bitbag_sylius_multi_vendor_marketplace_plugin.ui.postal_code',
+                'label' => 'bitbag_mvm.ui.postal_code',
             ])
         ;
     }
