@@ -1,4 +1,2 @@
 imports:
-    - suites/ui/managing_vendors.yml
-    - suites/ui/verifying_vendors.yml
-    - suites/ui/blocking_vendors.yml
+  - suites/ui/admin/product_listing.yml
