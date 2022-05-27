@@ -11,15 +11,15 @@ declare(strict_types=1);
 
 namespace BitBag\SyliusMultiVendorMarketplacePlugin\Entity;
 
-use Sylius\Component\Addressing\Model\CountryInterface;
+use Sylius\Component\Addressing\Model\Country;
 
 interface VendorAddressInterface
 {
     public function getId(): ?int;
 
-    public function getCountry(): ?CountryInterface;
+    public function getCountry(): ?Country;
 
-    public function setCountry(?CountryInterface $country): void;
+    public function setCountry(?Country $country): void;
 
     public function getCity(): ?string;
 

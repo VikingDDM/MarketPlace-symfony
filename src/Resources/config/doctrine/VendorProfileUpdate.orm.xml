@@ -4,7 +4,7 @@
                   xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
         http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
 
-    <entity name="BitBag\SyliusMultiVendorMarketplacePlugin\Entity\Vendor" table="bitbag_vendor">
+    <entity name="BitBag\SyliusMultiVendorMarketplacePlugin\Entity\VendorProfileUpdate" table="bitbag_vendor_profile_update">
         <id name="id" type="integer">
             <generator strategy="AUTO" />
         </id>
@@ -15,9 +15,13 @@
             <cascade>
                 <cascade-persist/>
             </cascade>
-        </one-to-one>        
-        <one-to-one field="customer" target-entity="BitBag\SyliusMultiVendorMarketplacePlugin\Entity\Customer" inversed-by="vendor">
-            <join-column name="customer_id" referenced-column-name="id" />
         </one-to-one>
+        <one-to-one field="vendor" target-entity="BitBag\SyliusMultiVendorMarketplacePlugin\Entity\Vendor" >
+            <cascade>
+                <cascade-persist/>
+            </cascade>
+        </one-to-one>
+        <field name="token" column="token" type="text" />
+        
     </entity>
 </doctrine-mapping>

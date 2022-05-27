@@ -11,12 +11,12 @@ declare(strict_types=1);
 
 namespace BitBag\SyliusMultiVendorMarketplacePlugin\Entity;
 
-class Vendor implements VendorInterface
+class VendorProfileUpdate implements VendorProfileUpdateInterface
 {
     private int $id;
-
-    private Customer $customer;
-
+    
+    private ?Vendor $vendor;
+    
     private ?string $companyName;
 
     private ?string $taxIdentifier;
@@ -24,6 +24,8 @@ class Vendor implements VendorInterface
     private ?string $phoneNumber;
 
     private ?VendorAddress $vendorAddress;
+    
+    private ?string $token;
 
     public function getId(): int
     {
@@ -33,6 +35,16 @@ class Vendor implements VendorInterface
     public function setId(int $id): void
     {
         $this->id = $id;
+    }
+
+    public function getVendor(): ?Vendor
+    {
+        return $this->vendor;
+    }
+
+    public function setVendor(?Vendor $vendor): void
+    {
+        $this->vendor = $vendor;
     }
 
     public function getCompanyName(): ?string
@@ -69,19 +81,21 @@ class Vendor implements VendorInterface
     {
         return $this->vendorAddress;
     }
-
+ 
     public function setVendorAddress(?VendorAddress $vendorAddress): void
     {
         $this->vendorAddress = $vendorAddress;
     }
-
-    public function getCustomer(): Customer
+   
+    public function getToken(): ?string
     {
-        return $this->customer;
+        return $this->token;
     }
-
-    public function setCustomer(Customer $customer): void
+   
+    public function setToken(?string $token): void
     {
-        $this->customer = $customer;
+        $this->token = $token;
     }
+    
+    
 }
