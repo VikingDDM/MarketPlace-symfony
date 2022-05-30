@@ -13,4 +13,9 @@ namespace BitBag\SyliusMultiVendorMarketplacePlugin\Repository;
 
 interface ProductListingRepositoryInterface
 {
+    public function find(
+        $id,
+        $lockMode = null,
+        $lockVersion = null
+    );
 }
