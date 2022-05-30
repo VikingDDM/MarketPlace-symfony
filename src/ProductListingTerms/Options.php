@@ -8,11 +8,9 @@ use BitBag\SyliusMultiVendorMarketplacePlugin\Entity\ProductListingInterface;
 
 final class Options
 {
-    public const STATUS_UNDER_VERIFICATION = 'bitbag_sylius_multi_vendor_marketplace_plugin.ui.under_verification';
-
-    public const STATUS_VERIFIED = 'bitbag_sylius_multi_vendor_marketplace_plugin.ui.verified';
-
-    public const STATUS_REJECTED = 'bitbag_sylius_multi_vendor_marketplace_plugin.ui.rejected';
+    const STATUS_UNDER_VERIFICATION = 'bitbag_sylius_multi_vendor_marketplace_plugin.ui.under_verification';
+    const STATUS_VERIFIED = 'bitbag_sylius_multi_vendor_marketplace_plugin.ui.verified';
+    const STATUS_REJECTED = 'bitbag_sylius_multi_vendor_marketplace_plugin.ui.rejected';
 
     public static function getTypeFilter(): array
     {

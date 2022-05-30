@@ -11,10 +11,9 @@ declare(strict_types=1);
 
 namespace BitBag\SyliusMultiVendorMarketplacePlugin\Controller\Action\Admin\ProductListing;
 
-use BitBag\SyliusMultiVendorMarketplacePlugin\Action\StateMachine\Transition\ProductListingStateMachineTransitionInterface;
 use BitBag\SyliusMultiVendorMarketplacePlugin\Entity\ProductListingInterface;
 use BitBag\SyliusMultiVendorMarketplacePlugin\Repository\ProductListingRepositoryInterface;
-use BitBag\SyliusMultiVendorMarketplacePlugin\Transitions\ProductListingTransitions;
+use SM\Factory\FactoryInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\RouterInterface;
@@ -25,16 +24,16 @@ final class RejectAction
 
     private RouterInterface $router;
 
-    private ProductListingStateMachineTransitionInterface $productListingStateMachineTransition;
+    private FactoryInterface $SMFactory;
 
     public function __construct(
         ProductListingRepositoryInterface $productListingRepository,
         RouterInterface $router,
-        ProductListingStateMachineTransitionInterface $productListingStateMachineTransition
+        FactoryInterface $SMFactory
     ) {
         $this->productListingRepository = $productListingRepository;
         $this->router = $router;
-        $this->productListingStateMachineTransition = $productListingStateMachineTransition;
+        $this->SMFactory = $SMFactory;
     }
 
     public function __invoke(Request $request): RedirectResponse
@@ -42,7 +41,11 @@ final class RejectAction
         /** @var ProductListingInterface $productListing */
         $productListing = $this->productListingRepository->find($request->attributes->get('id'));
 
-        $this->productListingStateMachineTransition->apply($productListing, ProductListingTransitions::TRANSITION_REJECT);
+        $productListingSM = $this->SMFactory->get($productListing, 'product_listing');
+
+        if ($productListingSM->can('reject_product_listing')) {
+            $productListingSM->apply('reject_product_listing');
+        }
 
         return new RedirectResponse($this->router->generate('bitbag_sylius_multi_vendor_marketplace_plugin_admin_product_listing_index'));
     }
