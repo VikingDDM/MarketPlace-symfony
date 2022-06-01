@@ -9,11 +9,8 @@
 
 declare(strict_types=1);
 
-namespace BitBag\SyliusMultiVendorMarketplacePlugin\Repository;
+namespace BitBag\SyliusMultiVendorMarketplacePlugin\Exception;
 
-use Doctrine\ORM\QueryBuilder;
-
-interface VendorRepositoryInterface
+class UserNotFoundException extends \Exception
 {
-    public function createListQueryBuilder(): QueryBuilder;
 }
