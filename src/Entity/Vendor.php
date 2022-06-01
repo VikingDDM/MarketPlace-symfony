@@ -11,13 +11,11 @@ declare(strict_types=1);
 
 namespace BitBag\SyliusMultiVendorMarketplacePlugin\Entity;
 
-use Sylius\Component\Resource\Model\ResourceInterface;
-
-class Vendor implements VendorDataInterface, VendorInterface, ResourceInterface
+class Vendor implements VendorInterface
 {
     private int $id;
 
-    private Customer $customer;
+    private CustomerInterface $customer;
 
     private ?string $companyName;
 
@@ -25,7 +23,7 @@ class Vendor implements VendorDataInterface, VendorInterface, ResourceInterface
 
     private ?string $phoneNumber;
 
-    private ?VendorAddress $vendorAddress;
+    private ?VendorAddressInterface $vendorAddress;
 
     public function getId(): int
     {
@@ -67,22 +65,22 @@ class Vendor implements VendorDataInterface, VendorInterface, ResourceInterface
         $this->phoneNumber = $phoneNumber;
     }
 
-    public function getVendorAddress(): ?VendorAddress
+    public function getVendorAddress(): ?VendorAddressInterface
     {
         return $this->vendorAddress;
     }
 
-    public function setVendorAddress(?VendorAddress $vendorAddress): void
+    public function setVendorAddress(?VendorAddressInterface $vendorAddress): void
     {
         $this->vendorAddress = $vendorAddress;
     }
 
-    public function getCustomer(): Customer
+    public function getCustomer(): CustomerInterface
     {
         return $this->customer;
     }
 
-    public function setCustomer(Customer $customer): void
+    public function setCustomer(CustomerInterface $customer): void
     {
         $this->customer = $customer;
     }
