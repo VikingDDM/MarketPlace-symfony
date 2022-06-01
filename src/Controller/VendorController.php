@@ -11,18 +11,39 @@ declare(strict_types=1);
 
 namespace BitBag\SyliusMultiVendorMarketplacePlugin\Controller;
 
-use BitBag\SyliusMultiVendorMarketplacePlugin\Entity\VendorInterface;
+use BitBag\SyliusMultiVendorMarketplacePlugin\Entity\Customer;
+use BitBag\SyliusMultiVendorMarketplacePlugin\Entity\VendorProfileUpdate;
 use BitBag\SyliusMultiVendorMarketplacePlugin\Exception\UserNotFoundException;
+use Doctrine\Persistence\ObjectManager;
+use Sylius\Bundle\ResourceBundle\Controller\AuthorizationCheckerInterface;
+use Sylius\Bundle\ResourceBundle\Controller\EventDispatcherInterface;
+use Sylius\Bundle\ResourceBundle\Controller\FlashHelperInterface;
+use Sylius\Bundle\ResourceBundle\Controller\NewResourceFactoryInterface;
+use Sylius\Bundle\ResourceBundle\Controller\RedirectHandlerInterface;
+use Sylius\Bundle\ResourceBundle\Controller\RequestConfigurationFactoryInterface;
 use Sylius\Bundle\ResourceBundle\Controller\ResourceController;
+use Sylius\Bundle\ResourceBundle\Controller\ResourceDeleteHandlerInterface;
+use Sylius\Bundle\ResourceBundle\Controller\ResourceFormFactoryInterface;
+use Sylius\Bundle\ResourceBundle\Controller\ResourcesCollectionProviderInterface;
+use Sylius\Bundle\ResourceBundle\Controller\ResourceUpdateHandlerInterface;
+use Sylius\Bundle\ResourceBundle\Controller\SingleResourceProviderInterface;
+use Sylius\Bundle\ResourceBundle\Controller\StateMachineInterface;
+use Sylius\Bundle\ResourceBundle\Controller\ViewHandlerInterface;
+use Sylius\Component\Core\Model\ShopUser;
+use Sylius\Component\Resource\Factory\FactoryInterface;
+use Sylius\Component\Resource\Metadata\MetadataInterface;
+use Sylius\Component\Resource\Repository\RepositoryInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Exception\TokenNotFoundException;
-use function Clue\StreamFilter\fun;
-use function ECSPrefix20211002\React\Promise\map;
-use function PHPUnit\Framework\returnValue;
 
 class VendorController extends ResourceController
 {
+    public function __construct(MetadataInterface $metadata, RequestConfigurationFactoryInterface $requestConfigurationFactory, ?ViewHandlerInterface $viewHandler, RepositoryInterface $repository, FactoryInterface $factory, NewResourceFactoryInterface $newResourceFactory, ObjectManager $manager, SingleResourceProviderInterface $singleResourceProvider, ResourcesCollectionProviderInterface $resourcesFinder, ResourceFormFactoryInterface $resourceFormFactory, RedirectHandlerInterface $redirectHandler, FlashHelperInterface $flashHelper, AuthorizationCheckerInterface $authorizationChecker, EventDispatcherInterface $eventDispatcher, ?StateMachineInterface $stateMachine, ResourceUpdateHandlerInterface $resourceUpdateHandler, ResourceDeleteHandlerInterface $resourceDeleteHandler)
+    {
+        parent::__construct($metadata, $requestConfigurationFactory, $viewHandler, $repository, $factory, $newResourceFactory, $manager, $singleResourceProvider, $resourcesFinder, $resourceFormFactory, $redirectHandler, $flashHelper, $authorizationChecker, $eventDispatcher, $stateMachine, $resourceUpdateHandler, $resourceDeleteHandler);
+    }
+
     public function createAction(Request $request): Response
     {
         try {
@@ -31,21 +52,20 @@ class VendorController extends ResourceController
             return $this->redirectToRoute('sylius_shop_login');
         }
     }
+      
+    public function updateAction(Request $request): Response
+    {              
+        /** @var ShopUser $user */
+        $user = $this->getUser();
+        /** @var Customer $customer */
+        $customer = $user->getCustomer();
+        $vendor = $customer->getVendor();        
+        $pendingUpdate = $this->manager->getRepository(VendorProfileUpdate::class)->findOneBy(['vendor' => $vendor]);
+        if (null == $pendingUpdate) {
+            return parent::updateAction($request);
+        }        
+        $this->addFlash('error','sylius.user.verify_email_request');
 
-    public function showVendorPageAction(Request $request): Response
-    {
-        /** @var VendorInterface $vendor */
-        $vendor = $this->repository->findOneBy(['slug' => $request->attributes->get('slug')]);
-
-        $images = [];
-        foreach ($vendor->getImages() as $image) {
-            $images[$image->getType()] = $image->getPath();
-        }
-
-        return $this->render('@BitBagSyliusMultiVendorMarketplacePlugin/vendor/vendor_page.html.twig', [
-            'vendor' => $vendor,
-            'imagesDir' => '/media/image/',
-            'images' => $images,
-        ]);
+        return $this->redirectToRoute('vendor_profile');
     }
 }
