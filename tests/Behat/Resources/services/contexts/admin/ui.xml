@@ -21,5 +21,10 @@
             <argument type="service" id="doctrine.orm.default_entity_manager"/>
         </service>
 
+        <service id="bitbag_sylius_mvm_plugin.behat.context.ui.admin.vendor_blocking" public="true"
+                 class="Tests\BitBag\SyliusMultiVendorMarketplacePlugin\Behat\Context\Ui\Admin\VendorBlockingContext">
+            <argument type="service" id="doctrine.orm.default_entity_manager"/>
+        </service>
+
     </services>
 </container>

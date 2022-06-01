@@ -1,2 +1,2 @@
 imports:
-    - { resource: "state_machine/vendor.yaml" }
+    - { resource: "state_machine/vendor.yml" }
