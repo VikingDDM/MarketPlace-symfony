@@ -11,11 +11,9 @@ declare(strict_types=1);
 
 namespace BitBag\SyliusMultiVendorMarketplacePlugin\Entity;
 
-use Sylius\Component\Resource\Model\ResourceInterface;
-
-class Vendor implements VendorDataInterface, VendorInterface, ResourceInterface
+class Vendor implements VendorInterface
 {
-    private int $id;
+    private ?int $id;
 
     private Customer $customer;
 
@@ -27,12 +25,12 @@ class Vendor implements VendorDataInterface, VendorInterface, ResourceInterface
 
     private ?VendorAddress $vendorAddress;
 
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function setId(int $id): void
+    public function setId(?int $id): void
     {
         $this->id = $id;
     }
