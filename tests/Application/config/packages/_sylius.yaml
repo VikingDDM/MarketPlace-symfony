@@ -7,44 +7,23 @@ imports:
 
     - { resource: "@SyliusApiBundle/Resources/config/app/config.yaml" }
 
+    - { resource: "@BitBagSyliusMultiVendorMarketplacePlugin/Resources/config/config.yml"}
+
 parameters:
     sylius_core.public_dir: '%kernel.project_dir%/public'
+
+sylius_product:
+    resources:
+        product:
+            classes:
+                model: 'BitBag\SyliusMultiVendorMarketplacePlugin\Entity\Product'
+
+sylius_customer:
+    resources:
+        customer:
+            classes:
+                model: 'BitBag\SyliusMultiVendorMarketplacePlugin\Entity\Customer'
 
 sylius_shop:
     product_grid:
         include_all_descendants: true
-
-winzou_state_machine:
-    mvm_product_listing:
-        class: 'BitBag\SyliusMultiVendorMarketplacePlugin\Entity\ProductListing'
-        property_path: status
-        graph: product_listing
-        states:
-            created: ~
-            under_verification: ~
-            verified: ~
-            rejected: ~
-        transitions:
-            send_to_verification:
-                from: ['created']
-                to: 'under_verification'
-            accept_product_listing:
-                from: ['under_verification']
-                to: 'verified'
-            reject_product_listing:
-                from: ['under_verification']
-                to: 'rejected'
-        callbacks:
-            after:
-                send_to_verification:
-                    on: [ 'send_to_verification' ]
-                    do: [ '@bitbag_sylius_multi_vendor_marketplace_plugin.state_machine.product_listing', 'sendToVerify' ]
-                    args: [ 'object' ]
-                accept_product_listing:
-                    on: ['accept_product_listing']
-                    do: ['@bitbag_sylius_multi_vendor_marketplace_plugin.state_machine.product_listing', 'verify']
-                    args: ['object']
-                reject_product_listing:
-                    on: [ 'reject_product_listing' ]
-                    do: [ '@bitbag_sylius_multi_vendor_marketplace_plugin.state_machine.product_listing', 'reject' ]
-                    args: [ 'object' ]
