@@ -30,5 +30,13 @@ final class MultiVendorMarketplaceMenuListener
             ])
             ->setLabel('bitbag_sylius_multi_vendor_marketplace_plugin.ui.product_listings')
             ->setLabelAttribute('icon', 'list');
+
+        $mvmRootMenuItem
+            ->addChild('vendors', [
+                'route' => 'bitbag_sylius_mvm_plugin_admin_vendor_index',
+            ])
+            ->setLabel('bitbag_sylius_multi_vendor_marketplace_plugin.ui.vendors')
+            ->setLabelAttribute('icon', 'users');
     }
 }
+
