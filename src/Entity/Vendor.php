@@ -11,17 +11,14 @@ declare(strict_types=1);
 
 namespace BitBag\SyliusMultiVendorMarketplacePlugin\Entity;
 
-class Vendor implements VendorInterface
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+use Sylius\Component\Core\Model\ProductInterface;
+use Sylius\Component\Resource\Model\ResourceInterface;
+
+class Vendor implements VendorDataInterface, VendorInterface, ResourceInterface
 {
-    public const STATUS_UNVERIFIED = 'unverified';
-
-    public const STATUS_VERIFIED = 'verified';
-
-    public const BLOCKED = 'blocked';
-
-    public const UNBLOCKED = 'unblocked';
-
-    private ?int $id;
+    private int $id;
 
     private Customer $customer;
 
@@ -33,16 +30,26 @@ class Vendor implements VendorInterface
 
     private ?VendorAddress $vendorAddress;
 
-    private string $status = self::STATUS_UNVERIFIED;
+    private ?string $slug;
 
-    private string $blocked = self::UNBLOCKED;
+    private ?string $description;
 
-    public function getId(): ?int
+    private ?VendorImageInterface $image;
+
+    /** @return Collection<int, ProductInterface> */
+    private Collection $products;
+
+    public function __construct()
+    {
+        $this->products = new ArrayCollection();
+    }
+
+    public function getId(): int
     {
         return $this->id;
     }
 
-    public function setId(?int $id): void
+    public function setId(int $id): void
     {
         $this->id = $id;
     }
@@ -97,25 +104,54 @@ class Vendor implements VendorInterface
         $this->customer = $customer;
     }
 
-    public function getStatus(): string
+    public function getSlug(): ?string
     {
-        return $this->status;
+        return $this->slug;
     }
 
-    public function setStatus(string $status): void
+    public function setSlug(?string $slug): void
     {
-        $this->status = $status;
+        $this->slug = $slug;
     }
 
-    public function getBlocked(): string
+    public function getDescription(): ?string
     {
-        return $this->blocked;
+        return $this->description;
     }
 
-    public function setBlocked(string $blocked): void
+    public function setDescription(?string $description): void
     {
-        $this->blocked = $blocked;
+        $this->description = $description;
     }
 
+    public function getImage(): ?VendorImageInterface
+    {
+        return $this->image;
+    }
 
+    public function setImage(VendorImageInterface $vendorImage): void
+    {
+        $this->image = $vendorImage;
+    }
+
+    /** @return Collection<int, VendorImageInterface> */
+    public function getProducts(): Collection
+    {
+        return $this->products;
+    }
+
+    public function addProduct(ProductInterface $product): void
+    {
+        if (false === $this->products->contains($product)) {
+            $this->products->add($product);
+            $product->setVendor($this);
+        }
+    }
+
+    public function removeProduct(ProductInterface $product): void
+    {
+        if (true === $this->products->contains($product)) {
+            $this->products->removeElement($product);
+        }
+    }
 }
