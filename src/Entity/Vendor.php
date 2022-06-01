@@ -11,13 +11,15 @@ declare(strict_types=1);
 
 namespace BitBag\SyliusMultiVendorMarketplacePlugin\Entity;
 
-use Sylius\Component\Resource\Model\ResourceInterface;
-
-class Vendor implements VendorDataInterface, VendorInterface, ResourceInterface
+class Vendor implements VendorInterface
 {
-    private int $id;
+    public const STATUS_UNVERIFIED = 'unverified';
 
-    private Customer $customer;
+    public const STATUS_VERIFIED = 'verified';
+
+    private ?int $id;
+
+    private CustomerInterface $customer;
 
     private ?string $companyName;
 
@@ -25,14 +27,16 @@ class Vendor implements VendorDataInterface, VendorInterface, ResourceInterface
 
     private ?string $phoneNumber;
 
-    private ?VendorAddress $vendorAddress;
+    private ?VendorAddressInterface $vendorAddress;
 
-    public function getId(): int
+    private string $status = self::STATUS_UNVERIFIED;
+
+    public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function setId(int $id): void
+    public function setId(?int $id): void
     {
         $this->id = $id;
     }
@@ -67,23 +71,33 @@ class Vendor implements VendorDataInterface, VendorInterface, ResourceInterface
         $this->phoneNumber = $phoneNumber;
     }
 
-    public function getVendorAddress(): ?VendorAddress
+    public function getVendorAddress(): ?VendorAddressInterface
     {
         return $this->vendorAddress;
     }
 
-    public function setVendorAddress(?VendorAddress $vendorAddress): void
+    public function setVendorAddress(?VendorAddressInterface $vendorAddress): void
     {
         $this->vendorAddress = $vendorAddress;
     }
 
-    public function getCustomer(): Customer
+    public function getCustomer(): CustomerInterface
     {
         return $this->customer;
     }
 
-    public function setCustomer(Customer $customer): void
+    public function setCustomer(CustomerInterface $customer): void
     {
         $this->customer = $customer;
+    }
+
+    public function getStatus(): string
+    {
+        return $this->status;
+    }
+
+    public function setStatus(string $status): void
+    {
+        $this->status = $status;
     }
 }
