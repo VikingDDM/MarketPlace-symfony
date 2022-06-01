@@ -1,3 +1,6 @@
-bitbag_sylius_multi_vendor_marketplace_plugin:
-    ui:
-        vendor_verified: 'Vendor has been successfully verified'
+# This file is part of the Sylius package.
+# (c) Paweł Jędrzejewski
+
+sylius:
+    customer:
+        register: 'ZAzThank you for registering, check your email to verify your account.'
