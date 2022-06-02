@@ -11,16 +11,11 @@ declare(strict_types=1);
 
 namespace BitBag\SyliusMultiVendorMarketplacePlugin\Entity;
 
+use BitBag\SyliusMultiVendorMarketplacePlugin\Entity\ProductListing\ProductListing;
+use Doctrine\Common\Collections\Collection;
+
 class Vendor implements VendorInterface
 {
-    public const STATUS_UNVERIFIED = 'unverified';
-
-    public const STATUS_VERIFIED = 'verified';
-
-    public const BLOCKED = 'blocked';
-
-    public const UNBLOCKED = 'unblocked';
-
     private ?int $id;
 
     private CustomerInterface $customer;
@@ -33,9 +28,7 @@ class Vendor implements VendorInterface
 
     private ?VendorAddressInterface $vendorAddress;
 
-    private string $status = self::STATUS_UNVERIFIED;
-
-    private string $blocked = self::UNBLOCKED;
+    private Collection $productListings;
 
     public function getId(): ?int
     {
@@ -97,23 +90,18 @@ class Vendor implements VendorInterface
         $this->customer = $customer;
     }
 
-    public function getStatus(): string
+    public function getProductListings(): Collection
     {
-        return $this->status;
+        return $this->productListings;
     }
 
-    public function setStatus(string $status): void
+    public function setProductListings(Collection $productListings): void
     {
-        $this->status = $status;
+        $this->productListings = $productListings;
     }
 
-    public function getBlocked(): string
+    public function addProductListing(ProductListing $productListings): void
     {
-        return $this->blocked;
-    }
-
-    public function setBlocked(string $blocked): void
-    {
-        $this->blocked = $blocked;
+        $this->productListings->add($productListings);
     }
 }

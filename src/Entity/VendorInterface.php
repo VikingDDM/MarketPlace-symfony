@@ -37,13 +37,5 @@ interface VendorInterface extends ResourceInterface
 
     public function getCustomer(): CustomerInterface;
 
-    public function setCustomer(Customer $customer): void;
-
-    public function getStatus(): string;
-
-    public function setStatus(string $status): void;
-
-    public function getBlocked(): string;
-
-    public function setBlocked(string $blocked): void;
+    public function setCustomer(CustomerInterface $customer): void;
 }
