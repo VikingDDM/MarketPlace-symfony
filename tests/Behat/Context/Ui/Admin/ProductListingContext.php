@@ -14,13 +14,14 @@ namespace Tests\BitBag\SyliusMultiVendorMarketplacePlugin\Behat\Context\Ui\Admin
 use Behat\Behat\Context\Context;
 use Behat\Mink\Element\DocumentElement;
 use Behat\MinkExtension\Context\RawMinkContext;
-use BitBag\SyliusMultiVendorMarketplacePlugin\Entity\ProductListing;
-use BitBag\SyliusMultiVendorMarketplacePlugin\Entity\ProductListingInterface;
+use BitBag\SyliusMultiVendorMarketplacePlugin\Entity\ProductListing\ProductListing;
+use BitBag\SyliusMultiVendorMarketplacePlugin\Entity\ProductListing\ProductListingInterface;
 use Doctrine\Common\DataFixtures\Purger\ORMPurger;
 use Doctrine\ORM\EntityManagerInterface;
+use Sylius\Bundle\CoreBundle\Fixture\Factory\AdminUserExampleFactory;
 use function PHPUnit\Framework\assertEquals;
 use function PHPUnit\Framework\assertNotEmpty;
-use Sylius\Bundle\CoreBundle\Fixture\Factory\AdminUserExampleFactory;
+use function PHPUnit\Framework\assertNotNull;
 
 final class ProductListingContext extends RawMinkContext implements Context
 {
@@ -67,30 +68,70 @@ final class ProductListingContext extends RawMinkContext implements Context
         $this->getPage()->fillField('Username', 'admin');
         $this->getPage()->fillField('Password', 'admin');
         $this->getPage()->pressButton('Login');
+        assertNotNull($this->getPage()->findLink('Logout'));
     }
 
     /**
-     * @Given there are :count product listings
+     * @Given there is/are :count product listing(s)
      */
     public function thereAreProductListings($count)
     {
         for ($i = 0; $i < $count; ++$i) {
             $productListing = new ProductListing();
-            $productListing->setName('product listing ' . $i);
-            $productListing->setStatus(ProductListingInterface::STATUS_CREATED);
+            $productListing->setCode('product listing ' . $i);
+            $productListing->setStatus(ProductListingInterface::STATUS_UNDER_VERIFICATION);
+            $productListing->setCode('code' . $i);
+            $productListing->setVersionNumber(0);
+            $productListing->setLocale('en_US');
+            $productListing->setSlug('product-listing-' . $i);
             $this->entityManager->persist($productListing);
         }
         $this->entityManager->flush();
     }
 
     /**
-     * @Then I should see :count product listings
+     * @Then I should see :count product listing(s)
      */
     public function iShouldSeeProductListings($count)
     {
         $rows = $this->getPage()->findAll('css', 'table > tbody > tr');
         assertNotEmpty($rows, 'Could not find any rows');
         assertEquals($count, count($rows), 'Rows numbers are not equal');
+    }
+
+    /**
+     * @Then I should see url :url
+     */
+    public function iShouldSeeUrl($url)
+    {
+        $currentUrl = $this->getSession()->getCurrentUrl();
+        $matches = preg_match($url, $currentUrl);
+        assertEquals(1, $matches);
+    }
+
+    /**
+     * @Given I should see product's listing status :status
+     */
+    public function iShouldSeeProductsListingStatus($status)
+    {
+        $productListingStatus = $this->getPage()->find('css', sprintf('table > tbody > tr > td:contains("%s")', $status));
+        assertNotNull($productListingStatus);
+    }
+
+    /**
+     * @Given I click :button button
+     */
+    public function iClickButton($button)
+    {
+        $this->getPage()->pressButton($button);
+    }
+
+    /**
+     * @Then I should be redirected to :url
+     */
+    public function iShouldBeRedirectedTo($url)
+    {
+        assertEquals($url, $this->getSession()->getCurrentUrl());
     }
 
     /**

@@ -11,17 +11,14 @@ declare(strict_types=1);
 
 namespace BitBag\SyliusMultiVendorMarketplacePlugin\Controller;
 
-use BitBag\SyliusMultiVendorMarketplacePlugin\Entity\Customer;
-use BitBag\SyliusMultiVendorMarketplacePlugin\Entity\VendorProfileUpdate;
 use BitBag\SyliusMultiVendorMarketplacePlugin\Exception\UserNotFoundException;
 use Sylius\Bundle\ResourceBundle\Controller\ResourceController;
-use Sylius\Component\Core\Model\ShopUser;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Exception\TokenNotFoundException;
 
 final class VendorController extends ResourceController
-{   
+{
     public function createAction(Request $request): Response
     {
         try {
@@ -31,21 +28,5 @@ final class VendorController extends ResourceController
         } catch (TokenNotFoundException $exception) {
             return $this->redirectToRoute('sylius_shop_login');
         }
-    }
-      
-    public function updateAction(Request $request): Response
-    {              
-        /** @var ShopUser $user */
-        $user = $this->getUser();
-        /** @var Customer $customer */
-        $customer = $user->getCustomer();
-        $vendor = $customer->getVendor();        
-        $pendingUpdate = $this->manager->getRepository(VendorProfileUpdate::class)->findOneBy(['vendor' => $vendor]);
-        if (null == $pendingUpdate) {
-            return parent::updateAction($request);
-        }        
-        $this->addFlash('error','sylius.user.verify_email_request');
-
-        return $this->redirectToRoute('vendor_profile');
     }
 }
