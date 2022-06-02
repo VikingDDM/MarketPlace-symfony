@@ -19,8 +19,7 @@ class VendorRegisterPage extends SymfonyPage
     {
         return 'vendor_register_form';
     }
-    
-    public function getValidationMessageCount($messageClass): int
+    public function getValidationMessageCount($messageClass)
     {
         $page = $this->getDocument();
         $validationMessages = $page->findAll('css', ".$messageClass");

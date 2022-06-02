@@ -13,7 +13,6 @@
             <tag name="container.service_subscriber"/>
             <argument type="service" id="request_stack"/>
             <argument type="service" id="bitbag.sylius_multi_vendor_marketplace_plugin.service.vendor_profile_update_service"/>
-            <argument type="service" id="bitbag.sylius_multi_vendor_marketplace_plugin.service.vendor_provider"/>
         </service>
 
         <service class="BitBag\SyliusMultiVendorMarketplacePlugin\Controller\ConfirmProfileUpdateAction"
@@ -27,10 +26,11 @@
             <argument type="service" id="doctrine.orm.default_entity_manager" />    
             <argument type="service" id="bitbag.sylius_multi_vendor_marketplace_plugin.service.vendor_profile_update_service"/>
         </service>
-        <service class="BitBag\SyliusMultiVendorMarketplacePlugin\Controller\VendorController" 
-                 id="bitbag.sylius_multi_vendor_marketplace_plugin.controller.vendor_controller" 
-                 parent="sylius.controller.zone">
-            <argument type="service" id="bitbag.sylius_multi_vendor_marketplace_plugin.service.vendor_provider"/>
+
+        <service class="BitBag\SyliusMultiVendorMarketplacePlugin\Controller\VendorController"
+                 id="bit_bag.sylius_multi_vendor_marketplace_plugin.controller.vendor_controller"
+                 public="true"
+        >
         </service>
     </services>
 </container>
