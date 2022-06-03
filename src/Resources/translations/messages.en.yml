@@ -1,15 +1,12 @@
 bitbag_sylius_multi_vendor_marketplace_plugin:
     ui:
         become_a_vendor: 'Become a Vendor'
-        block: 'Block'
         city: "City"
         company_address: "Company Address"
         company_name: 'Company name'
         country: "Country"
         customer: 'Customer'
         details: 'Details'
-        edit: 'Edit'
-        edit_vendor: 'Edit vendor'
         id: 'ID'
         marketplace: 'Marketplace'
         not_blank: "This field cannnot be empty"
@@ -21,10 +18,16 @@ bitbag_sylius_multi_vendor_marketplace_plugin:
         street: "Street"
         tax_id: 'Tax ID'
         tax_identifier: "Tax Identifier"
-        unblock: 'Unblock'
         unverified: 'Unverified'
         vendor_address: 'Vendor address'
         vendor_dashboard: "Vendor dashboard"
         vendors: 'Vendors'
         verified: 'Verified'
         verify: 'Verify'
+
+app:
+    ui:
+        vendors: 'Vendors'
+
+
+
