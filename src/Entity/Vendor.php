@@ -11,12 +11,10 @@ declare(strict_types=1);
 
 namespace BitBag\SyliusMultiVendorMarketplacePlugin\Entity;
 
-class Vendor implements VendorInterface
+use Sylius\Component\Resource\Model\ResourceInterface;
+
+class Vendor implements VendorDataInterface, VendorInterface, ResourceInterface
 {
-    public const STATUS_UNVERIFIED = 'unverified';
-
-    public const STATUS_VERIFIED = 'verified';
-
     private ?int $id;
 
     private CustomerInterface $customer;
@@ -28,8 +26,6 @@ class Vendor implements VendorInterface
     private ?string $phoneNumber;
 
     private ?VendorAddressInterface $vendorAddress;
-
-    private string $status = self::STATUS_UNVERIFIED;
 
     public function getId(): ?int
     {
@@ -89,15 +85,5 @@ class Vendor implements VendorInterface
     public function setCustomer(CustomerInterface $customer): void
     {
         $this->customer = $customer;
-    }
-
-    public function getStatus(): string
-    {
-        return $this->status;
-    }
-
-    public function setStatus(string $status): void
-    {
-        $this->status = $status;
     }
 }
