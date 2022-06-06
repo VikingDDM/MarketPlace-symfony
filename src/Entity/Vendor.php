@@ -15,6 +15,14 @@ use Sylius\Component\Resource\Model\ResourceInterface;
 
 class Vendor implements VendorDataInterface, VendorInterface, ResourceInterface
 {
+    public const STATUS_UNVERIFIED = 'unverified';
+
+    public const STATUS_VERIFIED = 'verified';
+
+    public const BLOCKED = 'blocked';
+
+    public const UNBLOCKED = 'unblocked';
+
     private ?int $id;
 
     private CustomerInterface $customer;
@@ -26,6 +34,10 @@ class Vendor implements VendorDataInterface, VendorInterface, ResourceInterface
     private ?string $phoneNumber;
 
     private ?VendorAddressInterface $vendorAddress;
+
+    private string $status = self::STATUS_UNVERIFIED;
+
+    private string $blocked = self::UNBLOCKED;
 
     public function getId(): ?int
     {
@@ -85,5 +97,25 @@ class Vendor implements VendorDataInterface, VendorInterface, ResourceInterface
     public function setCustomer(CustomerInterface $customer): void
     {
         $this->customer = $customer;
+    }
+
+    public function getStatus(): string
+    {
+        return $this->status;
+    }
+
+    public function setStatus(string $status): void
+    {
+        $this->status = $status;
+    }
+
+    public function getBlocked(): string
+    {
+        return $this->blocked;
+    }
+
+    public function setBlocked(string $blocked): void
+    {
+        $this->blocked = $blocked;
     }
 }

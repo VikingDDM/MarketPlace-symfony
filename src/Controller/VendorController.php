@@ -36,7 +36,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Exception\TokenNotFoundException;
 
-final class VendorController extends ResourceController
+class VendorController extends ResourceController
 {
     private VendorProvider $vendorProvider;
 

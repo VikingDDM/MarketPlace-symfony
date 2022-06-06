@@ -19,7 +19,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 
-final class VendorProfileUpdateAction extends AbstractController
+class VendorProfileUpdateAction extends AbstractController
 {
     private RequestStack $request;
 
