@@ -11,22 +11,36 @@ declare(strict_types=1);
 
 namespace BitBag\SyliusMultiVendorMarketplacePlugin\Controller;
 
+use BitBag\SyliusMultiVendorMarketplacePlugin\Entity\VendorInterface;
 use BitBag\SyliusMultiVendorMarketplacePlugin\Exception\UserNotFoundException;
 use Sylius\Bundle\ResourceBundle\Controller\ResourceController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Exception\TokenNotFoundException;
 
-final class VendorController extends ResourceController
+class VendorController extends ResourceController
 {
     public function createAction(Request $request): Response
     {
         try {
             return parent::createAction($request);
-        } catch (UserNotFoundException $exception) {
-            return $this->redirectToRoute('sylius_shop_login');
-        } catch (TokenNotFoundException $exception) {
+        } catch (UserNotFoundException|TokenNotFoundException $exception) {
             return $this->redirectToRoute('sylius_shop_login');
         }
+    }
+
+    public function showVendorPageAction(Request $request): Response
+    {
+        /** @var VendorInterface $vendor */
+        $vendor = $this->repository->findOneBy(['slug' => $request->attributes->get('slug')]);
+
+        $productRepository = $this->container->get('bit_bag.sylius_multi_vendor_marketplace_plugin.repository.product_repository');
+        $channel = $this->container->get('sylius.context.channel')->getChannel();
+        $paginator = $productRepository->findVendorProducts($vendor, $request, $channel);
+
+        return $this->render('@BitBagSyliusMultiVendorMarketplacePlugin/vendor/vendor_page.html.twig', [
+            'vendor' => $vendor,
+            'paginator' => $paginator,
+        ]);
     }
 }
