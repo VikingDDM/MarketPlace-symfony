@@ -37,6 +37,7 @@ class TokenOwningVoter extends Voter
         TokenInterface $token
     ) {
         $user = $token->getUser();
+
         if (!$user instanceof ShopUserInterface || null == $subject) {
             return false;
         }
