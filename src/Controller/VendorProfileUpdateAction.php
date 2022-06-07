@@ -14,27 +14,20 @@ namespace BitBag\SyliusMultiVendorMarketplacePlugin\Controller;
 use BitBag\SyliusMultiVendorMarketplacePlugin\Entity\Vendor;
 use BitBag\SyliusMultiVendorMarketplacePlugin\Form\VendorType;
 use BitBag\SyliusMultiVendorMarketplacePlugin\Service\VendorProfileUpdateService;
-use BitBag\SyliusMultiVendorMarketplacePlugin\Service\VendorProvider;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 
-final class VendorProfileUpdateAction extends AbstractController
+class VendorProfileUpdateAction extends AbstractController
 {
     private RequestStack $request;
 
     private VendorProfileUpdateService $vendorProfileUpdateService;
 
-    private VendorProvider $vendorProvider;
-
-    public function __construct(
-        RequestStack $request,
-        VendorProfileUpdateService $vendorProfileUpdateService,
-        VendorProvider $vendorProvider
-    ) {
+    public function __construct(RequestStack $request, VendorProfileUpdateService $vendorProfileUpdateService)
+    {
         $this->request = $request;
         $this->vendorProfileUpdateService = $vendorProfileUpdateService;
-        $this->vendorProvider = $vendorProvider;
     }
 
     public function __invoke(): Response
@@ -44,7 +37,7 @@ final class VendorProfileUpdateAction extends AbstractController
 
         $form->handleRequest($this->request->getCurrentRequest());
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->vendorProfileUpdateService->createPendingVendorProfileUpdate($form->getData(), $this->vendorProvider->getLoggedVendor());
+            $this->vendorProfileUpdateService->createPendingVendorProfileUpdate($form->getData());
         }
 
         return $this->redirectToRoute('vendor_profile');
