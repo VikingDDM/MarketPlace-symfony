@@ -14,8 +14,6 @@ namespace BitBag\SyliusMultiVendorMarketplacePlugin\Controller;
 use BitBag\SyliusMultiVendorMarketplacePlugin\Entity\Vendor;
 use BitBag\SyliusMultiVendorMarketplacePlugin\Form\VendorType;
 use BitBag\SyliusMultiVendorMarketplacePlugin\Service\VendorProfileUpdateService;
-use BitBag\SyliusMultiVendorMarketplacePlugin\Service\VendorProvider;
-use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
@@ -26,20 +24,10 @@ class VendorProfileUpdateAction extends AbstractController
 
     private VendorProfileUpdateService $vendorProfileUpdateService;
 
-    private VendorProvider $vendorProvider;
-
-    private EntityManager $manager;
-
-    public function __construct(
-        RequestStack $request,
-        VendorProfileUpdateService $vendorProfileUpdateService,
-        VendorProvider $vendorProvider,
-        EntityManager $manager
-    ) {
+    public function __construct(RequestStack $request, VendorProfileUpdateService $vendorProfileUpdateService)
+    {
         $this->request = $request;
         $this->vendorProfileUpdateService = $vendorProfileUpdateService;
-        $this->vendorProvider = $vendorProvider;
-        $this->manager = $manager;
     }
 
     public function __invoke(): Response
@@ -48,11 +36,8 @@ class VendorProfileUpdateAction extends AbstractController
         $form = $this->createForm(VendorType::class, $vendor);
 
         $form->handleRequest($this->request->getCurrentRequest());
-        $loggedVendor = $this->vendorProvider->getLoggedVendor();
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->vendorProfileUpdateService->createPendingVendorProfileUpdate($form->getData(), $loggedVendor);
-            $loggedVendor->setIsEdited(true);
-            $this->manager->flush();
+            $this->vendorProfileUpdateService->createPendingVendorProfileUpdate($form->getData());
         }
 
         return $this->redirectToRoute('vendor_profile');

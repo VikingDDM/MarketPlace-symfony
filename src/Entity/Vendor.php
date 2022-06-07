@@ -11,43 +11,50 @@ declare(strict_types=1);
 
 namespace BitBag\SyliusMultiVendorMarketplacePlugin\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+use Sylius\Component\Core\Model\ImageInterface;
+use Sylius\Component\Core\Model\ImagesAwareInterface;
+use Sylius\Component\Core\Model\ProductInterface;
 use Sylius\Component\Resource\Model\ResourceInterface;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
 
-class Vendor implements VendorDataInterface, VendorInterface, ResourceInterface
+class Vendor implements VendorDataInterface, VendorInterface, ResourceInterface, ImagesAwareInterface
 {
-    public const STATUS_UNVERIFIED = 'unverified';
+    private int $id;
 
-    public const STATUS_VERIFIED = 'verified';
+    private Customer $customer;
 
-    public const BLOCKED = 'blocked';
-
-    public const UNBLOCKED = 'unblocked';
-
-    private ?int $id;
-
-    private CustomerInterface $customer;
-
-    private ?string $companyName;
+    private ?string $companyName = null;
 
     private ?string $taxIdentifier;
 
     private ?string $phoneNumber;
 
-    private ?VendorAddressInterface $vendorAddress;
+    private ?VendorAddress $vendorAddress;
 
-    private string $status = self::STATUS_UNVERIFIED;
+    private ?string $slug;
 
-    private string $blocked = self::UNBLOCKED;
+    private ?string $description;
 
-    private bool $isEdited = false;
+    /** @return Collection<int, ImageInterface> */
+    private Collection $images;
 
-    public function getId(): ?int
+    /** @return Collection<int, ProductInterface> */
+    private Collection $products;
+
+    public function __construct()
+    {
+        $this->products = new ArrayCollection();
+        $this->images = new ArrayCollection();
+        $this->addImage(new VendorImage());
+    }
+
+    public function getId(): int
     {
         return $this->id;
     }
 
-    public function setId(?int $id): void
+    public function setId(int $id): void
     {
         $this->id = $id;
     }
@@ -82,53 +89,100 @@ class Vendor implements VendorDataInterface, VendorInterface, ResourceInterface
         $this->phoneNumber = $phoneNumber;
     }
 
-    public function getVendorAddress(): ?VendorAddressInterface
+    public function getVendorAddress(): ?VendorAddress
     {
         return $this->vendorAddress;
     }
 
-    public function setVendorAddress(?VendorAddressInterface $vendorAddress): void
+    public function setVendorAddress(?VendorAddress $vendorAddress): void
     {
         $this->vendorAddress = $vendorAddress;
     }
 
-    public function getCustomer(): CustomerInterface
+    public function getCustomer(): Customer
     {
         return $this->customer;
     }
 
-    public function setCustomer(CustomerInterface $customer): void
+    public function setCustomer(Customer $customer): void
     {
         $this->customer = $customer;
     }
 
-    public function getStatus(): string
+    public function getSlug(): ?string
     {
-        return $this->status;
+        return $this->slug;
     }
 
-    public function setStatus(string $status): void
+    public function setSlug(?string $slug): void
     {
-        $this->status = $status;
+        $this->slug = $slug;
     }
 
-    public function getBlocked(): string
+    public function getDescription(): ?string
     {
-        return $this->blocked;
+        return $this->description;
     }
 
-    public function setBlocked(string $blocked): void
+    public function setDescription(?string $description): void
     {
-        $this->blocked = $blocked;
+        $this->description = $description;
     }
 
-    public function isEdited(): bool
+    /** @return Collection<int, VendorImageInterface> */
+    public function getProducts(): Collection
     {
-        return $this->isEdited;
+        return $this->products;
     }
 
-    public function setIsEdited(bool $isEdited): void
+    public function addProduct(ProductInterface $product): void
     {
-        $this->isEdited = $isEdited;
+        if (false === $this->products->contains($product)) {
+            $this->products->add($product);
+            $product->setVendor($this);
+        }
+    }
+
+    public function removeProduct(ProductInterface $product): void
+    {
+        if (true === $this->products->contains($product)) {
+            $this->products->removeElement($product);
+        }
+    }
+
+    public function getImages(): Collection
+    {
+        return $this->images;
+    }
+
+    public function getImagesByType(string $type): Collection
+    {
+        return $this->images->filter(function (ImageInterface $image) use ($type) {
+            return $type === $image->getType();
+        });
+    }
+
+    public function hasImages(): bool
+    {
+        return !$this->images->isEmpty();
+    }
+
+    public function hasImage(ImageInterface $image): bool
+    {
+        return $this->images->contains($image);
+    }
+
+    public function addImage(ImageInterface $image): void
+    {
+        $image->setOwner($this);
+        $this->images->add($image);
+    }
+
+    public function removeImage(ImageInterface $image): void
+    {
+        if ($this->hasImage($image)) {
+            $image->setOwner(null);
+            $this->images->removeElement($image);
+        }
     }
 }

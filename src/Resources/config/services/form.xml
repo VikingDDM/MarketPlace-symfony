@@ -9,19 +9,29 @@
             <parameter>sylius</parameter>
         </parameter>
     </parameters>
-    <services>
-        <service id="bitbag.sylius_multi_vendor_marketplace_plugin.form.vendor_type"
-                class="BitBag\SyliusMultiVendorMarketplacePlugin\Form\VendorType">
-            <argument>%bitbag_sylius_multi_vendor_marketplace_plugin.model.vendor.class%</argument>
+    
+    <services>        
+        <service
+                id="bitbag.sylius_multi_vendor_marketplace_plugin.form.vendor_type"
+                class="BitBag\SyliusMultiVendorMarketplacePlugin\Form\VendorType"
+        >
+            <argument>%bitbag_multi_vendor_marketplace.model.vendor.class%</argument>
             <argument type="service" id="security.token_storage"/>
             <argument>%bitbag_sylius_organization_plugin.form.type.vendor.validation_groups%</argument>
             <tag name="form.type"/>
         </service>
-        <service id="bit_bag.sylius_multi_vendor_marketplace_plugin.form.type.vendor_edit_type"
-                 class="BitBag\SyliusMultiVendorMarketplacePlugin\Form\Type\VendorEditType">
-            <argument>%bitbag_sylius_multi_vendor_marketplace_plugin.model.vendor.class%</argument>
+
+        <service id="bitbag.sylius_multi_vendor_marketplace_plugin.form.type.vendor_image"
+                 class="BitBag\SyliusMultiVendorMarketplacePlugin\Form\VendorImageType"
+        >
+            <argument>BitBag\SyliusMultiVendorMarketplacePlugin\Entity\VendorImage</argument>
             <tag name="form.type"/>
+        </service>
+
+        <service id="bitbag.sylius_multi_vendor_marketplace_plugin.form.extension.type.vendor"
+                 class="BitBag\SyliusMultiVendorMarketplacePlugin\Form\Extension\VendorImageTypeExtension"
+        >
+            <tag name="form.type_extension" extended_type="BitBag\SyliusMultiVendorMarketplacePlugin\Form\VendorType"/>
         </service>
     </services>
 </container>
-
