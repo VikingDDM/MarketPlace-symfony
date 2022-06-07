@@ -11,7 +11,7 @@ namespace BitBag\SyliusMultiVendorMarketplacePlugin\Entity;
 
 interface VendorDataInterface
 {
-    public function getId(): int;
+    public function getId(): ?int;
 
     public function setId(int $id): void;
 
@@ -27,7 +27,7 @@ interface VendorDataInterface
 
     public function setPhoneNumber(?string $phoneNumber): void;
 
-    public function getVendorAddress(): ?VendorAddress;
+    public function getVendorAddress(): ?VendorAddressInterface;
 
-    public function setVendorAddress(?VendorAddress $vendorAddress): void;
+    public function setVendorAddress(?VendorAddressInterface $vendorAddress): void;
 }
