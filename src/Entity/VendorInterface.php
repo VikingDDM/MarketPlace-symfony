@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace BitBag\SyliusMultiVendorMarketplacePlugin\Entity;
 
-interface VendorInterface extends VendorProfileInterface
+interface VendorInterface extends VendorDataInterface
 {
     public function getId(): ?int;
 
@@ -33,5 +33,17 @@ interface VendorInterface extends VendorProfileInterface
 
     public function getCustomer(): ?CustomerInterface;
 
-    public function setCustomer(CustomerInterface $customer): void;
+    public function setCustomer(Customer $customer): void;
+
+    public function getStatus(): string;
+
+    public function setStatus(string $status): void;
+
+    public function getBlocked(): string;
+
+    public function setBlocked(string $blocked): void;
+
+    public function isEdited(): bool;
+
+    public function setIsEdited(bool $isEdited): void;
 }

@@ -12,9 +12,18 @@ declare(strict_types=1);
 namespace BitBag\SyliusMultiVendorMarketplacePlugin\Entity;
 
 use Sylius\Component\Resource\Model\ResourceInterface;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 
-class Vendor implements VendorProfileInterface, VendorInterface, ResourceInterface
+class Vendor implements VendorDataInterface, VendorInterface, ResourceInterface
 {
+    public const STATUS_UNVERIFIED = 'unverified';
+
+    public const STATUS_VERIFIED = 'verified';
+
+    public const BLOCKED = 'blocked';
+
+    public const UNBLOCKED = 'unblocked';
+
     private ?int $id;
 
     private CustomerInterface $customer;
@@ -26,6 +35,12 @@ class Vendor implements VendorProfileInterface, VendorInterface, ResourceInterfa
     private ?string $phoneNumber;
 
     private ?VendorAddressInterface $vendorAddress;
+
+    private string $status = self::STATUS_UNVERIFIED;
+
+    private string $blocked = self::UNBLOCKED;
+
+    private bool $isEdited = false;
 
     public function getId(): ?int
     {
@@ -85,5 +100,35 @@ class Vendor implements VendorProfileInterface, VendorInterface, ResourceInterfa
     public function setCustomer(CustomerInterface $customer): void
     {
         $this->customer = $customer;
+    }
+
+    public function getStatus(): string
+    {
+        return $this->status;
+    }
+
+    public function setStatus(string $status): void
+    {
+        $this->status = $status;
+    }
+
+    public function getBlocked(): string
+    {
+        return $this->blocked;
+    }
+
+    public function setBlocked(string $blocked): void
+    {
+        $this->blocked = $blocked;
+    }
+
+    public function isEdited(): bool
+    {
+        return $this->isEdited;
+    }
+
+    public function setIsEdited(bool $isEdited): void
+    {
+        $this->isEdited = $isEdited;
     }
 }

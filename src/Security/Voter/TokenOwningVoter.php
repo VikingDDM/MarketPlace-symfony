@@ -31,10 +31,6 @@ class TokenOwningVoter extends Voter
     }
 
     /** @phpstan-ignore-next-line */
-    /*
-     * This method call is ignored because phpstan force us to type hint arguments but this method in symfony 4.4
-     * is declared without so type hinted arguments cause trouble
-     */
     protected function voteOnAttribute(
         $attribute,
         $subject,
