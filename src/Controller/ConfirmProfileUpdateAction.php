@@ -14,40 +14,43 @@ namespace BitBag\SyliusMultiVendorMarketplacePlugin\Controller;
 use BitBag\SyliusMultiVendorMarketplacePlugin\Entity\VendorProfileUpdate;
 use BitBag\SyliusMultiVendorMarketplacePlugin\Security\Voter\TokenOwningVoter;
 use BitBag\SyliusMultiVendorMarketplacePlugin\Service\VendorProfileUpdateService;
-use BitBag\SyliusMultiVendorMarketplacePlugin\Service\VendorProvider;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Bundle\FrameworkBundle\Routing\Router;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Core\Security;
 
-final class ConfirmProfileUpdateAction extends AbstractController
+final class ConfirmProfileUpdateAction
 {
     private EntityManagerInterface $entityManager;
 
     private VendorProfileUpdateService $vendorProfileUpdateService;
-    private VendorProvider $vendorProvider;
 
-    public function __construct(EntityManagerInterface $entityManager, VendorProfileUpdateService $vendorProfileUpdateService, VendorProvider $vendorProvider)
-    {
+    private Security $security;
+
+    private Router $router;
+
+    public function __construct(
+        EntityManagerInterface $entityManager,
+        VendorProfileUpdateService $vendorProfileUpdateService,
+        Security $security,
+        Router $router
+    ) {
         $this->entityManager = $entityManager;
         $this->vendorProfileUpdateService = $vendorProfileUpdateService;
-        $this->vendorProvider = $vendorProvider;
+        $this->security = $security;
+        $this->router = $router;
     }
 
     public function __invoke(string $token): Response
     {
         $vendorProfileUpdateData = $this->entityManager->getRepository(VendorProfileUpdate::class)->findOneBy(['token' => $token]);
-        if (null == $vendorProfileUpdateData) {
-            return $this->redirectToRoute('vendor_profile');
+        $profileRoot = $this->router->generate('vendor_profile');
+        $vendorIsGranted = $this->security->isGranted(TokenOwningVoter::UPDATE, $vendorProfileUpdateData);
+        if ($vendorIsGranted && null !== $vendorProfileUpdateData) {
+            $this->vendorProfileUpdateService->updateVendorFromPendingData($vendorProfileUpdateData);
         }
-        $this->denyAccessUnlessGranted(TokenOwningVoter::UPDATE, $vendorProfileUpdateData);
 
-        $this->vendorProfileUpdateService->updateVendorFromPendingData($vendorProfileUpdateData);
-
-        $loggedVendor = $this->vendorProvider->getLoggedVendor();
-        $loggedVendor->setEditDate(null);
-        $this->entityManager->flush();
-
-
-        return $this->redirectToRoute('vendor_profile');
+        return new RedirectResponse($profileRoot);
     }
 }
