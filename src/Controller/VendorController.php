@@ -36,7 +36,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Exception\TokenNotFoundException;
 
-final class VendorController extends ResourceController
+class VendorController extends ResourceController
 {
     private VendorProvider $vendorProvider;
 
@@ -59,27 +59,9 @@ final class VendorController extends ResourceController
         ResourceUpdateHandlerInterface $resourceUpdateHandler,
         ResourceDeleteHandlerInterface $resourceDeleteHandler,
         VendorProvider $vendorProvider
-    ) {
-        parent::__construct(
-            $metadata,
-            $requestConfigurationFactory,
-            $viewHandler,
-            $repository,
-            $factory,
-            $newResourceFactory,
-            $manager,
-            $singleResourceProvider,
-            $resourcesFinder,
-            $resourceFormFactory,
-            $redirectHandler,
-            $flashHelper,
-            $authorizationChecker,
-            $eventDispatcher,
-            $stateMachine,
-            $resourceUpdateHandler,
-            $resourceDeleteHandler
-        );
-
+    )
+    {
+        parent::__construct($metadata, $requestConfigurationFactory, $viewHandler, $repository, $factory, $newResourceFactory, $manager, $singleResourceProvider, $resourcesFinder, $resourceFormFactory, $redirectHandler, $flashHelper, $authorizationChecker, $eventDispatcher, $stateMachine, $resourceUpdateHandler, $resourceDeleteHandler);
         $this->vendorProvider = $vendorProvider;
     }
 
@@ -96,7 +78,7 @@ final class VendorController extends ResourceController
 
     public function updateAction(Request $request): Response
     {
-        $vendor = $this->vendorProvider->provideCurrentVendor();
+        $vendor = $this->vendorProvider->getLoggedVendor();
         $pendingUpdate = $this->manager->getRepository(VendorProfileUpdate::class)->findOneBy(['vendor' => $vendor]);
         if (null == $pendingUpdate) {
             return parent::updateAction($request);
