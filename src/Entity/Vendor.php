@@ -11,45 +11,43 @@ declare(strict_types=1);
 
 namespace BitBag\SyliusMultiVendorMarketplacePlugin\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
-use Sylius\Component\Core\Model\ProductInterface;
 use Sylius\Component\Resource\Model\ResourceInterface;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 
 class Vendor implements VendorDataInterface, VendorInterface, ResourceInterface
 {
-    private int $id;
+    public const STATUS_UNVERIFIED = 'unverified';
 
-    private Customer $customer;
+    public const STATUS_VERIFIED = 'verified';
 
-    private ?string $companyName = null;
+    public const BLOCKED = 'blocked';
+
+    public const UNBLOCKED = 'unblocked';
+
+    private ?int $id;
+
+    private CustomerInterface $customer;
+
+    private ?string $companyName;
 
     private ?string $taxIdentifier;
 
     private ?string $phoneNumber;
 
-    private ?VendorAddress $vendorAddress;
+    private ?VendorAddressInterface $vendorAddress;
 
-    private ?string $slug;
+    private string $status = self::STATUS_UNVERIFIED;
 
-    private ?string $description;
+    private string $blocked = self::UNBLOCKED;
 
-    private ?VendorImageInterface $image;
+    private ?string $editDate = null;
 
-    /** @return Collection<int, ProductInterface> */
-    private Collection $products;
-
-    public function __construct()
-    {
-        $this->products = new ArrayCollection();
-    }
-
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function setId(int $id): void
+    public function setId(?int $id): void
     {
         $this->id = $id;
     }
@@ -84,74 +82,53 @@ class Vendor implements VendorDataInterface, VendorInterface, ResourceInterface
         $this->phoneNumber = $phoneNumber;
     }
 
-    public function getVendorAddress(): ?VendorAddress
+    public function getVendorAddress(): ?VendorAddressInterface
     {
         return $this->vendorAddress;
     }
 
-    public function setVendorAddress(?VendorAddress $vendorAddress): void
+    public function setVendorAddress(?VendorAddressInterface $vendorAddress): void
     {
         $this->vendorAddress = $vendorAddress;
     }
 
-    public function getCustomer(): Customer
+    public function getCustomer(): CustomerInterface
     {
         return $this->customer;
     }
 
-    public function setCustomer(Customer $customer): void
+    public function setCustomer(CustomerInterface $customer): void
     {
         $this->customer = $customer;
     }
 
-    public function getSlug(): ?string
+    public function getStatus(): string
     {
-        return $this->slug;
+        return $this->status;
     }
 
-    public function setSlug(?string $slug): void
+    public function setStatus(string $status): void
     {
-        $this->slug = $slug;
+        $this->status = $status;
     }
 
-    public function getDescription(): ?string
+    public function getBlocked(): string
     {
-        return $this->description;
+        return $this->blocked;
     }
 
-    public function setDescription(?string $description): void
+    public function setBlocked(string $blocked): void
     {
-        $this->description = $description;
+        $this->blocked = $blocked;
     }
 
-    /** @return Collection<int, ProductInterface> */
-    public function getProducts(): Collection
+    public function getEditDate(): ?string
     {
-        return $this->products;
+        return $this->editDate;
     }
 
-    public function addProduct(ProductInterface $product): void
+    public function setEditDate(?string $editDate): void
     {
-        if (false === $this->products->contains($product)) {
-            $this->products->add($product);
-            $product->setVendor($this);
-        }
-    }
-
-    public function removeProduct(ProductInterface $product): void
-    {
-        if (true === $this->products->contains($product)) {
-            $this->products->removeElement($product);
-        }
-    }
-
-    public function getImage(): ?VendorImageInterface
-    {
-        return $this->image;
-    }
-
-    public function setImage(?VendorImageInterface $image): void
-    {
-        $this->image = $image;
+        $this->editDate = $editDate;
     }
 }
