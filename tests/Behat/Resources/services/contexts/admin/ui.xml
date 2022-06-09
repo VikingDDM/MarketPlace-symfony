@@ -14,22 +14,12 @@
             <argument type="service" id="doctrine.orm.default_entity_manager"/>
             <argument type="service" id="sylius.fixture.example_factory.admin_user"/>
         </service>
-
-        <service id="bitbag_sylius_mvm_plugin.behat.context.ui.admin.vendor_verification" public="true"
-                 class="Tests\BitBag\SyliusMultiVendorMarketplacePlugin\Behat\Context\Ui\Admin\VendorVerificationContext">
+        <service id="bitbag.sylius_multi_vendor_marketplace_plugin.behat.context.admin.start_conversation" public="true"
+                 class="Tests\BitBag\SyliusMultiVendorMarketplacePlugin\Behat\Context\Admin\StarConversationContext">
+            <argument type="service" id="doctrine.orm.entity_manager"/>
             <argument type="service" id="sylius.fixture.example_factory.admin_user"/>
-            <argument type="service" id="doctrine.orm.default_entity_manager"/>
+            <argument type="service" id="sylius.fixture.example_factory.shop_user"/>
+            <argument type="service" id="bitbag.sylius_multi_vendor_marketplace_plugin.behat.factory.vendor_example"/>
         </service>
-
-        <service id="bitbag_sylius_mvm_plugin.behat.context.ui.admin.vendor_blocking" public="true"
-                 class="Tests\BitBag\SyliusMultiVendorMarketplacePlugin\Behat\Context\Ui\Admin\VendorBlockingContext">
-            <argument type="service" id="doctrine.orm.default_entity_manager"/>
-        </service>
-
-        <service id="bitbag_sylius_mvm_plugin.behat.context.ui.admin.vendor_editing" public="true"
-                 class="Tests\BitBag\SyliusMultiVendorMarketplacePlugin\Behat\Context\Ui\Admin\VendorEditingContext">
-            <argument type="service" id="doctrine.orm.default_entity_manager"/>
-        </service>
-
     </services>
 </container>

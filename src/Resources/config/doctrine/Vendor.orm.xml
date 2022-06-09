@@ -8,12 +8,9 @@
         <id name="id" type="integer">
             <generator strategy="AUTO" />
         </id>
-        <field name="companyName" column="company_name" type="string" />
-        <field name="taxIdentifier" column="tax_identifier" type="string" />
-        <field name="phoneNumber" column="phone_number" type="string" />
-        <field name="status" column="status" type="string" />
-        <field name="blocked" column="blocked" type="string" />
-        <field name="editDate" column="edit_date" type="string" nullable="true"/>
+        <field name="companyName" column="company_name" type="text" />
+        <field name="taxIdentifier" column="tax_identifier" type="text" />
+        <field name="phoneNumber" column="phone_number" type="text" />
 
         <one-to-one field="vendorAddress" target-entity="BitBag\SyliusMultiVendorMarketplacePlugin\Entity\VendorAddress" >
             <cascade>
@@ -24,6 +21,5 @@
         <one-to-one field="customer" target-entity="BitBag\SyliusMultiVendorMarketplacePlugin\Entity\Customer" inversed-by="vendor">
             <join-column name="customer_id" referenced-column-name="id" />
         </one-to-one>
-
     </entity>
 </doctrine-mapping>
