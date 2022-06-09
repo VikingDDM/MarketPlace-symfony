@@ -1,4 +1,5 @@
 suites:
-    main:
-        namespace: \    
-        psr4_prefix: 
+    app:
+        namespace: BitBag\SyliusMultiVendorMarketplacePlugin
+        psr4_prefix: BitBag\SyliusMultiVendorMarketplacePlugin
+        src_path: src/
