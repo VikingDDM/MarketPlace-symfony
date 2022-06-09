@@ -1,3 +1,2 @@
 imports:
   - { resource: 'grids/**/*.yml' }
-  - { resource: "grid/conversation.yml" }

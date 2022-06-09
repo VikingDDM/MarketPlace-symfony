@@ -12,9 +12,8 @@ declare(strict_types=1);
 namespace BitBag\SyliusMultiVendorMarketplacePlugin\Repository;
 
 use Doctrine\ORM\QueryBuilder;
-use Sylius\Component\Resource\Repository\RepositoryInterface;
 
-interface VendorRepositoryInterface extends RepositoryInterface
+interface VendorRepositoryInterface
 {
     public function createListQueryBuilder(): QueryBuilder;
 }
