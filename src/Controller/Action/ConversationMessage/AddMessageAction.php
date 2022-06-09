@@ -47,8 +47,9 @@ final class AddMessageAction extends AbstractController
 
     public function __invoke(int $id, Request $request): Response
     {
-        if (!$this->isAssetsUser()) {
-            return $this->redirectUserNotAccess();
+        if (!$this->isAssetsUser())
+        {
+            return $this->notAssetsVendorUserRedirect();
         }
         $form = $this->formFactory->create(MessageType::class);
         $redirect = $request->attributes->get('_sylius')['redirect'];

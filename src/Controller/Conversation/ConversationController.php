@@ -32,11 +32,12 @@ final class ConversationController extends AbstractController
     private ActualUserResolverInterface $actualUserResolver;
 
     public function __construct(
-        Environment $templatingEngine,
-        FormFactoryInterface $formFactory,
+        Environment                     $templatingEngine,
+        FormFactoryInterface            $formFactory,
         ConversationRepositoryInterface $conversationRepository,
-        ActualUserResolverInterface $actualUserResolver
-    ) {
+        ActualUserResolverInterface     $actualUserResolver
+    )
+    {
         $this->templatingEngine = $templatingEngine;
         $this->formFactory = $formFactory;
         $this->conversationRepository = $conversationRepository;
@@ -45,8 +46,7 @@ final class ConversationController extends AbstractController
 
     public function index(Request $request): Response
     {
-        if (!$this->isAssetsUser())
-        {
+        if (!$this->isAssetsUser()) {
             return $this->redirectUserNotAccess();
         }
 
@@ -54,8 +54,7 @@ final class ConversationController extends AbstractController
 
         $actualUser = $this->actualUserResolver->resolve();
 
-        if (null == $actualUser)
-        {
+        if (null == $actualUser) {
             return $this->redirectUserNotAccess();
         }
         if ($request->query->get('closed')) {

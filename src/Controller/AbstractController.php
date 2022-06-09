@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace BitBag\SyliusMultiVendorMarketplacePlugin\Controller;
 
 use Sylius\Component\Core\Model\AdminUserInterface;
@@ -12,7 +14,7 @@ abstract class AbstractController extends \Symfony\Bundle\FrameworkBundle\Contro
     {
         $user = $this->getUser();
         if ($user instanceof ShopUserInterface) {
-            return ($this->getUser()->getCustomer()->getVendor());
+            return (null !== $this->getUser()->getCustomer()->getVendor());
         }
     }
 
