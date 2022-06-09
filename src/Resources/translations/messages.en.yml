@@ -1,22 +1,30 @@
 bitbag_sylius_multi_vendor_marketplace_plugin:
-  ui:
-    vendor_dashboard: "Vendor dashboard"
-    vendor_profile: "Profile"
-    product_listings: 'Product listings'
-    marketplace: 'Marketplace'
-    publishedAt: 'Published at'
-    status: 'Status'
-    tax_identifier: "Tax Identifier"
-    not_blank: "This field cannnot be empty"
-    company_name: "Company name"
-    country: "Country"
-    city: "City"
-    street: "Street"
-    phone_number: "Phone number"
-    company_address: "Company Address"
-    postal_code: "Postal code"
-    logo: 'Logo'
-    invalid_logo: 'Please upload a valid image (jpg/png/svg)'
-    description: 'Description'
-  email:
-    request_profile_update: "Hey, you asked to change your company details. For security purposes, we need to verify your decision. Click on the link below if you want to make a change or ignore this message."
+    ui:
+        become_a_vendor: 'Become a Vendor'
+        city: "City"
+        company_address: "Company Address"
+        company_name: 'Company name'
+        country: "Country"
+        customer: 'Customer'
+        details: 'Details'
+        id: 'ID'
+        marketplace: 'Marketplace'
+        not_blank: "This field cannnot be empty"
+        phone_number: "Phone number"
+        postal_code: "Postal code"
+        product_listings: 'Product listings'
+        publishedAt: 'Published at'
+        status: 'Status'
+        street: "Street"
+        tax_id: 'Tax ID'
+        tax_identifier: "Tax Identifier"
+        unverified: 'Unverified'
+        vendor_address: 'Vendor address'
+        vendor_dashboard: "Vendor dashboard"
+        vendors: 'Vendors'
+        verified: 'Verified'
+        verify: 'Verify'
+
+app:
+    ui:
+        vendors: 'Vendors'

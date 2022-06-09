@@ -11,13 +11,9 @@ declare(strict_types=1);
 
 namespace BitBag\SyliusMultiVendorMarketplacePlugin\Repository;
 
+use Doctrine\ORM\QueryBuilder;
+
 interface VendorRepositoryInterface
 {
-    /**
-     * @return mixed
-     */
-    public function findOneBy(
-        array $criteria,
-        ?array $orderBy = null
-    );
+    public function createListQueryBuilder(): QueryBuilder;
 }

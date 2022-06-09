@@ -11,44 +11,28 @@ declare(strict_types=1);
 
 namespace BitBag\SyliusMultiVendorMarketplacePlugin\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
-use Sylius\Component\Resource\Model\ResourceInterface;
-
-class Vendor implements VendorDataInterface, VendorInterface, ResourceInterface
+class Vendor implements VendorInterface
 {
-    private int $id;
+    private ?int $id;
 
-    private Customer $customer;
+    private CustomerInterface $customer;
 
-    private ?string $companyName = null;
+    private ?string $companyName;
 
     private ?string $taxIdentifier;
 
     private ?string $phoneNumber;
 
-    private ?VendorAddress $vendorAddress;
+    private ?VendorAddressInterface $vendorAddress;
 
-    private ?string $slug;
+    private string $status = self::STATUS_UNVERIFIED;
 
-    private ?string $description;
-
-    private ?VendorImageInterface $image = null;
-
-    /** @var Collection<int, ProductInterface> */
-    private Collection $products;
-
-    public function __construct()
-    {
-        $this->products = new ArrayCollection();
-    }
-
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function setId(int $id): void
+    public function setId(?int $id): void
     {
         $this->id = $id;
     }
@@ -83,74 +67,33 @@ class Vendor implements VendorDataInterface, VendorInterface, ResourceInterface
         $this->phoneNumber = $phoneNumber;
     }
 
-    public function getVendorAddress(): ?VendorAddress
+    public function getVendorAddress(): ?VendorAddressInterface
     {
         return $this->vendorAddress;
     }
 
-    public function setVendorAddress(?VendorAddress $vendorAddress): void
+    public function setVendorAddress(?VendorAddressInterface $vendorAddress): void
     {
         $this->vendorAddress = $vendorAddress;
     }
 
-    public function getCustomer(): Customer
+    public function getCustomer(): CustomerInterface
     {
         return $this->customer;
     }
 
-    public function setCustomer(Customer $customer): void
+    public function setCustomer(CustomerInterface $customer): void
     {
         $this->customer = $customer;
     }
 
-    public function getSlug(): ?string
+    public function getStatus(): string
     {
-        return $this->slug;
+        return $this->status;
     }
 
-    public function setSlug(?string $slug): void
+    public function setStatus(string $status): void
     {
-        $this->slug = $slug;
-    }
-
-    public function getDescription(): ?string
-    {
-        return $this->description;
-    }
-
-    public function setDescription(?string $description): void
-    {
-        $this->description = $description;
-    }
-
-    /** @return Collection<int, ProductInterface> */
-    public function getProducts(): Collection
-    {
-        return $this->products;
-    }
-
-    public function addProduct(ProductInterface $product): void
-    {
-        if (false === $this->products->contains($product)) {
-            $this->products->add($product);
-            $product->setVendor($this);
-        }
-    }
-
-    public function removeProduct(ProductInterface $product): void
-    {
-        if (true === $this->products->contains($product)) {
-            $this->products->removeElement($product);
-        }
-    }
-
-    public function getImage(): ?VendorImageInterface
-    {
-        return $this->image;
-    }
-
-    public function setImage(?VendorImageInterface $image): void
-    {
-        $this->image = $image;
+        $this->status = $status;
     }
 }

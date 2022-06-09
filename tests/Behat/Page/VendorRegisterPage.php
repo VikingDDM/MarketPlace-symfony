@@ -12,7 +12,6 @@ declare(strict_types=1);
 namespace Tests\BitBag\SyliusMultiVendorMarketplacePlugin\Behat\Page;
 
 use FriendsOfBehat\PageObjectExtension\Page\SymfonyPage;
-use Webmozart\Assert\Assert;
 
 class VendorRegisterPage extends SymfonyPage
 {
@@ -20,23 +19,11 @@ class VendorRegisterPage extends SymfonyPage
     {
         return 'vendor_register_form';
     }
-
-    public function getValidationMessageCount($messageClass)
+    
+    public function getValidationMessageCount($messageClass): int
     {
         $page = $this->getDocument();
         $validationMessages = $page->findAll('css', ".$messageClass");
         return count($validationMessages);
-    }
-
-    public function attachFile(string $path): void
-    {
-        $filesPath = $this->getParameter('files_path');
-
-        Assert::notEmpty($filesPath);
-
-        $this->getDocument()->attachFileToField(
-            'vendor_image_file',
-            $filesPath . $path
-        );
     }
 }

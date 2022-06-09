@@ -1,0 +1,10 @@
+{% if vendor.status == constant('BitBag\\SyliusMultiVendorMarketplacePlugin\\Entity\\VendorInterface::STATUS_UNVERIFIED') %}
+
+    {% import '@SyliusUi/Macro/buttons.html.twig' as buttons %}
+
+    {% set path = options.link.url|default(path('bitbag_sylius_multi_vendor_marketplace_plugin_admin_vendor_verify', {'id': vendor.id})) %}
+
+    {{ buttons.default(path, 'bitbag_sylius_multi_vendor_marketplace_plugin.ui.verify', vendor.id, 'thumbs up', 'ui labeled icon button primary') }}
+
+{% endif %}
+
