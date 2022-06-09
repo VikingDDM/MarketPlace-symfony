@@ -4,7 +4,7 @@ sylius_grid:
             driver:
                 name: doctrine/orm
                 options:
-                    class: "%bitbag_sylius_multi_vendor_marketplace_plugin.model.vendor.class%"
+                    class: "%bitbag_multi_vendor_marketplace.model.vendor.class%"
                     repository:
                         method: createListQueryBuilder
             sorting:
@@ -22,19 +22,11 @@ sylius_grid:
                     type: string
                     label: bitbag_sylius_multi_vendor_marketplace_plugin.ui.tax_id
                     sortable: ~
-                status:
-                    type: twig
-                    label: bitbag_sylius_multi_vendor_marketplace_plugin.ui.status
-                    options:
-                        template: '@BitBagSyliusMultiVendorMarketplacePlugin/Grid/status.html.twig'
             actions:
                 main:
                     create:
                         type: create
                 item:
-                    details:
-                        label: bitbag_sylius_multi_vendor_marketplace_plugin.ui.details
-                        type: show
                     update:
                         type: update
                     delete:
