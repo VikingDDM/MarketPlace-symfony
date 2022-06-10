@@ -11,30 +11,39 @@ declare(strict_types=1);
 
 namespace BitBag\SyliusMultiVendorMarketplacePlugin\Entity;
 
-use Doctrine\Common\Collections\Collection;
+use Sylius\Component\Resource\Model\ResourceInterface;
 
-interface VendorInterface extends VendorDataInterface
+interface VendorInterface extends ResourceInterface
 {
-    public function getCustomer(): Customer;
+    public function getId(): ?int;
+
+    public function setId(?int $id): void;
+
+    public function getCompanyName(): ?string;
+
+    public function setCompanyName(?string $companyName): void;
+
+    public function getTaxIdentifier(): ?string;
+
+    public function setTaxIdentifier(?string $taxIdentifier): void;
+
+    public function getPhoneNumber(): ?string;
+
+    public function setPhoneNumber(?string $phoneNumber): void;
+
+    public function getVendorAddress(): ?VendorAddressInterface;
+
+    public function setVendorAddress(?VendorAddressInterface $vendorAddress): void;
+
+    public function getCustomer(): CustomerInterface;
 
     public function setCustomer(Customer $customer): void;
 
-    public function getSlug(): ?string;
+    public function getStatus(): string;
 
-    public function setSlug(?string $slug): void;
+    public function setStatus(string $status): void;
 
-    public function getDescription(): ?string;
+    public function isEnabled(): bool;
 
-    public function setDescription(?string $description): void;
-
-    /** @return Collection<int, ProductInterface> */
-    public function getProducts(): Collection;
-
-    public function addProduct(ProductInterface $product): void;
-
-    public function removeProduct(ProductInterface $product): void;
-
-    public function getImage(): ?VendorImageInterface;
-
-    public function setImage(?VendorImageInterface $image): void;
+    public function setEnabled(bool $enabled): void;
 }
