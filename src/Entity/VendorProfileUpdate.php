@@ -13,19 +13,19 @@ namespace BitBag\SyliusMultiVendorMarketplacePlugin\Entity;
 
 class VendorProfileUpdate implements VendorProfileUpdateInterface
 {
-    protected int $id;
+    private int $id;
 
-    protected ?VendorInterface $vendor;
+    private ?VendorInterface $vendor;
 
-    protected ?string $companyName;
+    private ?string $companyName;
 
-    protected ?string $taxIdentifier;
+    private ?string $taxIdentifier;
 
-    protected ?string $phoneNumber;
+    private ?string $phoneNumber;
 
-    protected ?VendorAddressInterface $vendorAddress;
+    private ?VendorAddress $vendorAddress;
 
-    protected ?string $token;
+    private ?string $token;
 
     public function getId(): int
     {
@@ -77,12 +77,12 @@ class VendorProfileUpdate implements VendorProfileUpdateInterface
         $this->phoneNumber = $phoneNumber;
     }
 
-    public function getVendorAddress(): ?VendorAddressInterface
+    public function getVendorAddress(): ?VendorAddress
     {
         return $this->vendorAddress;
     }
 
-    public function setVendorAddress(?VendorAddressInterface $vendorAddress): void
+    public function setVendorAddress(?VendorAddress $vendorAddress): void
     {
         $this->vendorAddress = $vendorAddress;
     }
