@@ -11,9 +11,9 @@ declare(strict_types=1);
 
 namespace BitBag\SyliusMultiVendorMarketplacePlugin\Controller;
 
-use BitBag\SyliusMultiVendorMarketplacePlugin\Entity\Vendor;
-use BitBag\SyliusMultiVendorMarketplacePlugin\Entity\VendorInterface;
+use BitBag\SyliusMultiVendorMarketplacePlugin\Entity\VendorProfileUpdate;
 use BitBag\SyliusMultiVendorMarketplacePlugin\Exception\UserNotFoundException;
+use BitBag\SyliusMultiVendorMarketplacePlugin\Service\VendorProvider;
 use Doctrine\Persistence\ObjectManager;
 use Sylius\Bundle\ResourceBundle\Controller\AuthorizationCheckerInterface;
 use Sylius\Bundle\ResourceBundle\Controller\EventDispatcherInterface;
@@ -33,35 +33,33 @@ use Sylius\Component\Resource\Factory\FactoryInterface;
 use Sylius\Component\Resource\Metadata\MetadataInterface;
 use Sylius\Component\Resource\Repository\RepositoryInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Exception\TokenNotFoundException;
 
 final class VendorController extends ResourceController
 {
-    private RequestStack $request;
+    private VendorProvider $vendorProvider;
 
     public function __construct(
-        MetadataInterface                    $metadata,
+        MetadataInterface $metadata,
         RequestConfigurationFactoryInterface $requestConfigurationFactory,
-        ?ViewHandlerInterface                $viewHandler,
-        RepositoryInterface                  $repository,
-        FactoryInterface                     $factory,
-        NewResourceFactoryInterface          $newResourceFactory,
-        ObjectManager                        $manager,
-        SingleResourceProviderInterface      $singleResourceProvider,
+        ?ViewHandlerInterface $viewHandler,
+        RepositoryInterface $repository,
+        FactoryInterface $factory,
+        NewResourceFactoryInterface $newResourceFactory,
+        ObjectManager $manager,
+        SingleResourceProviderInterface $singleResourceProvider,
         ResourcesCollectionProviderInterface $resourcesFinder,
-        ResourceFormFactoryInterface         $resourceFormFactory,
-        RedirectHandlerInterface             $redirectHandler,
-        FlashHelperInterface                 $flashHelper,
-        AuthorizationCheckerInterface        $authorizationChecker,
-        EventDispatcherInterface             $eventDispatcher,
-        ?StateMachineInterface               $stateMachine,
-        ResourceUpdateHandlerInterface       $resourceUpdateHandler,
-        ResourceDeleteHandlerInterface       $resourceDeleteHandler,
-        RequestStack                         $request
-    )
-    {
+        ResourceFormFactoryInterface $resourceFormFactory,
+        RedirectHandlerInterface $redirectHandler,
+        FlashHelperInterface $flashHelper,
+        AuthorizationCheckerInterface $authorizationChecker,
+        EventDispatcherInterface $eventDispatcher,
+        ?StateMachineInterface $stateMachine,
+        ResourceUpdateHandlerInterface $resourceUpdateHandler,
+        ResourceDeleteHandlerInterface $resourceDeleteHandler,
+        VendorProvider $vendorProvider
+    ) {
         parent::__construct(
             $metadata,
             $requestConfigurationFactory,
@@ -82,7 +80,7 @@ final class VendorController extends ResourceController
             $resourceDeleteHandler
         );
 
-        $this->request = $request;
+        $this->vendorProvider = $vendorProvider;
     }
 
     public function createAction(Request $request): Response
@@ -96,17 +94,15 @@ final class VendorController extends ResourceController
         }
     }
 
-    public function verifyVendorAction(): Response
+    public function updateAction(Request $request): Response
     {
-        $vendorId = $this->request->getCurrentRequest()->attributes->get('id');
+        $vendor = $this->vendorProvider->provideCurrentVendor();
+        $pendingUpdate = $this->manager->getRepository(VendorProfileUpdate::class)->findOneBy(['vendor' => $vendor]);
+        if (null == $pendingUpdate) {
+            return parent::updateAction($request);
+        }
+        $this->addFlash('error', 'sylius.user.verify_email_request');
 
-        $currentVendor = $this->manager->getRepository(Vendor::class)->findOneBy(['id' => $vendorId]);
-        $currentVendor->setStatus(VendorInterface::STATUS_VERIFIED);
-
-        $this->manager->flush();
-
-        $this->addFlash('success', 'bitbag_sylius_multi_vendor_marketplace_plugin.ui.vendor_verified');
-
-        return $this->redirectToRoute('bitbag_sylius_multi_vendor_marketplace_plugin_admin_vendor_index');
+        return $this->redirectToRoute('vendor_profile');
     }
 }
