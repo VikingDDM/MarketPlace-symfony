@@ -11,24 +11,27 @@ declare(strict_types=1);
 
 namespace BitBag\SyliusMultiVendorMarketplacePlugin\Entity;
 
-use BitBag\SyliusMultiVendorMarketplacePlugin\Entity\ProductListing\ProductListing;
-use Doctrine\Common\Collections\Collection;
+use Sylius\Component\Resource\Model\ResourceInterface;
 
-class Vendor implements VendorInterface
+class Vendor implements VendorProfileInterface, VendorInterface, ResourceInterface
 {
-    private ?int $id;
+    protected ?int $id;
 
-    private CustomerInterface $customer;
+    protected CustomerInterface $customer;
 
-    private ?string $companyName;
+    protected ?string $companyName;
 
-    private ?string $taxIdentifier;
+    protected ?string $taxIdentifier;
 
-    private ?string $phoneNumber;
+    protected ?string $phoneNumber;
 
-    private ?VendorAddressInterface $vendorAddress;
+    protected ?VendorAddressInterface $vendorAddress;
 
-    private Collection $productListings;
+    private string $status = self::STATUS_UNVERIFIED;
+
+    private bool $enabled = true;
+
+    private ?string $editDate = null;
 
     public function getId(): ?int
     {
@@ -90,18 +93,33 @@ class Vendor implements VendorInterface
         $this->customer = $customer;
     }
 
-    public function getProductListings(): Collection
+    public function getStatus(): string
     {
-        return $this->productListings;
+        return $this->status;
     }
 
-    public function setProductListings(Collection $productListings): void
+    public function setStatus(string $status): void
     {
-        $this->productListings = $productListings;
+        $this->status = $status;
     }
 
-    public function addProductListing(ProductListing $productListings): void
+    public function isEnabled(): bool
     {
-        $this->productListings->add($productListings);
+        return $this->enabled;
+    }
+
+    public function setEnabled(bool $enabled): void
+    {
+        $this->enabled = $enabled;
+    }
+
+    public function getEditDate(): ?string
+    {
+        return $this->editDate;
+    }
+
+    public function setEditDate(?string $editDate): void
+    {
+        $this->editDate = $editDate;
     }
 }
