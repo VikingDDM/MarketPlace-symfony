@@ -13,14 +13,6 @@ namespace BitBag\SyliusMultiVendorMarketplacePlugin\Entity;
 
 class Vendor implements VendorInterface
 {
-    public const STATUS_UNVERIFIED = 'unverified';
-
-    public const STATUS_VERIFIED = 'verified';
-
-    public const BLOCKED = 'blocked';
-
-    public const UNBLOCKED = 'unblocked';
-
     private ?int $id;
 
     private CustomerInterface $customer;
@@ -34,8 +26,6 @@ class Vendor implements VendorInterface
     private ?VendorAddressInterface $vendorAddress;
 
     private string $status = self::STATUS_UNVERIFIED;
-
-    private string $blocked = self::UNBLOCKED;
 
     public function getId(): ?int
     {
@@ -105,15 +95,5 @@ class Vendor implements VendorInterface
     public function setStatus(string $status): void
     {
         $this->status = $status;
-    }
-
-    public function getBlocked(): string
-    {
-        return $this->blocked;
-    }
-
-    public function setBlocked(string $blocked): void
-    {
-        $this->blocked = $blocked;
     }
 }
