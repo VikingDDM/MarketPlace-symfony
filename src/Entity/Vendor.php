@@ -11,27 +11,24 @@ declare(strict_types=1);
 
 namespace BitBag\SyliusMultiVendorMarketplacePlugin\Entity;
 
-use Sylius\Component\Resource\Model\ResourceInterface;
+use BitBag\SyliusMultiVendorMarketplacePlugin\Entity\ProductListing\ProductListing;
+use Doctrine\Common\Collections\Collection;
 
-class Vendor implements VendorProfileInterface, VendorInterface, ResourceInterface
+class Vendor implements VendorInterface
 {
-    protected ?int $id;
+    private ?int $id;
 
-    protected CustomerInterface $customer;
+    private CustomerInterface $customer;
 
-    protected ?string $companyName;
+    private ?string $companyName;
 
-    protected ?string $taxIdentifier;
+    private ?string $taxIdentifier;
 
-    protected ?string $phoneNumber;
+    private ?string $phoneNumber;
 
-    protected ?VendorAddressInterface $vendorAddress;
+    private ?VendorAddressInterface $vendorAddress;
 
-    private string $status = self::STATUS_UNVERIFIED;
-
-    private bool $enabled = true;
-
-    private ?string $editDate = null;
+    private Collection $productListings;
 
     public function getId(): ?int
     {
@@ -93,33 +90,18 @@ class Vendor implements VendorProfileInterface, VendorInterface, ResourceInterfa
         $this->customer = $customer;
     }
 
-    public function getStatus(): string
+    public function getProductListings(): Collection
     {
-        return $this->status;
+        return $this->productListings;
     }
 
-    public function setStatus(string $status): void
+    public function setProductListings(Collection $productListings): void
     {
-        $this->status = $status;
+        $this->productListings = $productListings;
     }
 
-    public function isEnabled(): bool
+    public function addProductListing(ProductListing $productListings): void
     {
-        return $this->enabled;
-    }
-
-    public function setEnabled(bool $enabled): void
-    {
-        $this->enabled = $enabled;
-    }
-
-    public function getEditDate(): ?string
-    {
-        return $this->editDate;
-    }
-
-    public function setEditDate(?string $editDate): void
-    {
-        $this->editDate = $editDate;
+        $this->productListings->add($productListings);
     }
 }

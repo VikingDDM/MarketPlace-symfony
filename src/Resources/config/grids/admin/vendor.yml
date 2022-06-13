@@ -1,14 +1,10 @@
 sylius_grid:
-    templates:
-        action:
-            enable_disable_action: "@BitBagSyliusMultiVendorMarketplacePlugin/Grid/Action/enableDisableButtons.html.twig"
-            edit_verified_vendor: "@BitBagSyliusMultiVendorMarketplacePlugin/Grid/Action/editVerifiedVendor.html.twig"
     grids:
         bitbag_sylius_multi_vendor_marketplace_plugin_vendor:
             driver:
                 name: doctrine/orm
                 options:
-                    class: "%bitbag_sylius_multi_vendor_marketplace_plugin.model.vendor.class%"
+                    class: "%bitbag_multi_vendor_marketplace.model.vendor.class%"
                     repository:
                         method: createListQueryBuilder
             sorting:
@@ -26,28 +22,12 @@ sylius_grid:
                     type: string
                     label: bitbag_sylius_multi_vendor_marketplace_plugin.ui.tax_id
                     sortable: ~
-                status:
-                    type: twig
-                    label: bitbag_sylius_multi_vendor_marketplace_plugin.ui.status
-                    options:
-                        template: '@BitBagSyliusMultiVendorMarketplacePlugin/Grid/status.html.twig'
-                    sortable: ~
-                enabled:
-                    type: twig
-                    label: bitbag_sylius_multi_vendor_marketplace_plugin.ui.enabled
-                    options:
-                        template: '@BitBagSyliusMultiVendorMarketplacePlugin/Grid/Field/enabled.html.twig'
             actions:
                 main:
                     create:
                         type: create
                 item:
-                    details:
-                        label: bitbag_sylius_multi_vendor_marketplace_plugin.ui.details
-                        type: show
                     update:
-                        type: edit_verified_vendor
+                        type: update
                     delete:
                         type: delete
-                    enable_disable:
-                        type: enable_disable_action
