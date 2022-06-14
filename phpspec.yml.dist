@@ -1,4 +1,4 @@
 suites:
     main:
-        namespace: BitBag\SyliusMultiVendorMarketplacePlugin\
-        psr4_prefix: BitBag\SyliusMultiVendorMarketplacePlugin\
+        namespace: \    
+        psr4_prefix: 

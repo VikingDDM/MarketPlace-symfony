@@ -11,24 +11,21 @@ declare(strict_types=1);
 
 namespace BitBag\SyliusMultiVendorMarketplacePlugin\Entity;
 
-use BitBag\SyliusMultiVendorMarketplacePlugin\Entity\ProductListing\ProductListing;
-use Doctrine\Common\Collections\Collection;
+use Sylius\Component\Resource\Model\ResourceInterface;
 
-class Vendor implements VendorInterface
+class Vendor implements VendorProfileInterface, VendorInterface, ResourceInterface
 {
-    private ?int $id;
+    protected ?int $id;
 
-    private CustomerInterface $customer;
+    protected CustomerInterface $customer;
 
-    private ?string $companyName;
+    protected ?string $companyName;
 
-    private ?string $taxIdentifier;
+    protected ?string $taxIdentifier;
 
-    private ?string $phoneNumber;
+    protected ?string $phoneNumber;
 
-    private ?VendorAddressInterface $vendorAddress;
-
-    private Collection $productListings;
+    protected ?VendorAddressInterface $vendorAddress;
 
     public function getId(): ?int
     {
@@ -88,20 +85,5 @@ class Vendor implements VendorInterface
     public function setCustomer(CustomerInterface $customer): void
     {
         $this->customer = $customer;
-    }
-
-    public function getProductListings(): Collection
-    {
-        return $this->productListings;
-    }
-
-    public function setProductListings(Collection $productListings): void
-    {
-        $this->productListings = $productListings;
-    }
-
-    public function addProductListing(ProductListing $productListings): void
-    {
-        $this->productListings->add($productListings);
     }
 }
