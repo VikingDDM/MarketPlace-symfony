@@ -2,20 +2,9 @@ bitbag_sylius_multi_vendor_marketplace_plugin:
   ui:
     become_a_vendor: 'Become a Vendor'
     product_listings: 'Product listings'
-    product_list: 'Product list'
     marketplace: 'Marketplace'
-    published_at: 'Published at'
-    verified_at: 'Verified at'
+    publishedAt: 'Published at'
     status: 'Status'
-    details: 'Details'
-    name: 'Name'
-    accept: 'Accept'
-    reject: 'Reject'
-    confirm: 'Are you sure?'
-    code: 'Code'
-    verified: 'Verified'
-    rejected: 'Rejected'
-    under_verification: 'Under verification'
     vendor_dashboard: "Vendor dashboard"
     tax_identifier: "Tax Identifier"
     not_blank: "This field cannnot be empty"
@@ -25,13 +14,10 @@ bitbag_sylius_multi_vendor_marketplace_plugin:
     street: "Street"
     phone_number: "Phone number"
     company_address: "Company Address"
-    postal_code: "Postal code"
-    id: 'ID'
+    postal_code: "Postal code"   
+    id: 'ID'  
     tax_id: 'Tax ID'
     vendors: 'Vendors'
-    manage_products: 'Manage products'
-    product_listing_verified: 'Product listing verified.'
-    product_listing_rejected: 'Product listing rejected.'
 app:
     ui:
         vendors: Vendors
