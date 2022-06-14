@@ -15,15 +15,15 @@ use Sylius\Component\Addressing\Model\CountryInterface;
 
 class VendorAddress implements VendorAddressInterface
 {
-    protected ?int $id;
+    private ?int $id;
 
-    protected ?CountryInterface $country;
+    private ?CountryInterface $country;
 
-    protected ?string $city;
+    private ?string $city;
 
-    protected ?string $street;
+    private ?string $street;
 
-    protected ?string $postalCode;
+    private ?string $postalCode;
 
     public function getId(): ?int
     {
